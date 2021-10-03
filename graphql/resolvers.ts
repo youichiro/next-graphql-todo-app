@@ -1,20 +1,7 @@
-    export const resolvers = {
-      Query: {
-        projects: () => {
-          return [
-            {
-              id: 1,
-              name: 'sample project 1',
-            },
-            {
-              id: 2,
-              name: 'sample project 2',
-            },
-            {
-              id: 3,
-              name: 'sample project 3',
-            },
-          ]
+      export const resolvers = {
+        Query: {
+          projects: (_parent, _args, ctx) => {
+            return ctx.prisma.project.findMany()
+          },
         },
-      },
-    }
+      }
