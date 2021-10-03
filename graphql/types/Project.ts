@@ -19,3 +19,15 @@ export const Project = objectType({
     })
   },
 })
+
+export const ProjectQuery = extendType({
+  type: 'Query',
+  definition(t) {
+    t.nonNull.list.field('projects', {
+      type: Project,
+      resolve(_parent, _args, ctx) {
+        return ctx.prisma.project.findMany()
+      },
+    })
+  },
+})

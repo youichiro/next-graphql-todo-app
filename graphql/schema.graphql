@@ -2,6 +2,19 @@
 ### Do not make changes to this file directly
 
 
+type Project {
+  id: Int
+  name: String
+  user: User
+}
+
 type Query {
-  ok: Boolean!
+  projects: [Project]!
+}
+
+type User {
+  email: String
+  id: Int
+  name: String
+  projects: [Project]
 }
