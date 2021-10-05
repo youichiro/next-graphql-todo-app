@@ -1,20 +1,21 @@
-import { objectType, extendType, nonNull, intArg } from 'nexus'
+import { objectType, extendType, nonNull, intArg, stringArg } from 'nexus'
 import { User } from './User'
 
 export const Project = objectType({
   name: 'Project',
   definition(t) {
-    t.int('id')
-    t.string('name')
-    t.field('user', {
+    t.nonNull.int('id')
+    t.nonNull.string('name')
+    t.nonNull.field('user', {
       type: User,
-      async resolve(_parent, _args, ctx) {
-        return await ctx.prisma.user
+      resolve(parent, _args, ctx) {
+        return ctx.prisma.project
           .findUnique({
             where: {
-              id: _parent.id,
+              id: parent.id,
             },
           })
+          .user()
       },
     })
   },
@@ -25,8 +26,17 @@ export const ProjectQuery = extendType({
   definition(t) {
     t.nonNull.list.field('projects', {
       type: Project,
-      resolve(_parent, _args, ctx) {
-        return ctx.prisma.project.findMany()
+      args: {
+        userId: nonNull(intArg()),
+      },
+      resolve(_parent, args, ctx) {
+        return ctx.prisma.project.findMany({
+          where: {
+            userId: {
+              equals: args.userId,
+            },
+          }
+        })
       },
     })
   },
@@ -38,16 +48,20 @@ export const CreateProjectMutation = extendType({
     t.nonNull.field('createProject', {
       type: Project,
       args: {
+        name: nonNull(stringArg()),
         userId: nonNull(intArg()),
       },
-      resolve(_parent, _args, ctx) {
-        const project = ctx.prisma.project.create({
+      resolve(_parent, args, ctx) {
+        return ctx.prisma.project.create({
           data: {
-            name: 'project created by mutation',
-            userId: _args.userId,
+            name: args.name,
+            user: {
+              connect: {
+                id: args.userId
+              }
+            }
           }
         })
-        return project
       },
     })
   },

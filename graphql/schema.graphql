@@ -3,22 +3,33 @@
 
 
 type Mutation {
-  createProject(userId: Int!): Project!
+  createProject(name: String!, userId: Int!): Project!
+  createTask(description: String, projectId: Int!, title: String!): Task!
+  createUser(email: String, name: String!): User!
 }
 
 type Project {
-  id: Int
-  name: String
-  user: User
+  id: Int!
+  name: String!
+  user: User!
 }
 
 type Query {
-  projects: [Project]!
+  projects(userId: Int!): [Project]!
+  tasks(projectId: Int!): [Task]!
+  users: [User]!
+}
+
+type Task {
+  description: String
+  id: Int!
+  project: Project!
+  title: String!
 }
 
 type User {
   email: String
-  id: Int
-  name: String
+  id: Int!
+  name: String!
   projects: [Project]
 }
