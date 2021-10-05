@@ -1,4 +1,4 @@
-import { objectType, extendType } from 'nexus'
+import { objectType, extendType, nonNull, intArg } from 'nexus'
 import { User } from './User'
 
 export const Project = objectType({
@@ -27,6 +27,27 @@ export const ProjectQuery = extendType({
       type: Project,
       resolve(_parent, _args, ctx) {
         return ctx.prisma.project.findMany()
+      },
+    })
+  },
+})
+
+export const CreateProjectMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.nonNull.field('createProject', {
+      type: Project,
+      args: {
+        userId: nonNull(intArg()),
+      },
+      resolve(_parent, _args, ctx) {
+        const project = ctx.prisma.project.create({
+          data: {
+            name: 'project created by mutation',
+            userId: _args.userId,
+          }
+        })
+        return project
       },
     })
   },
