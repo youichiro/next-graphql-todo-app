@@ -7,34 +7,70 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Account {
+  id                 Int       @id @default(autoincrement())
+  compoundId         String    @unique @map(name: "compound_id")
+  userId             Int       @map(name: "user_id")
+  providerType       String    @map(name: "provider_type")
+  providerId         String    @map(name: "provider_id")
+  providerAccountId  String    @map(name: "provider_account_id")
+  refreshToken       String?   @map(name: "refresh_token")
+  accessToken        String?   @map(name: "access_token")
+  accessTokenExpires DateTime? @map(name: "access_token_expires")
+  createdAt          DateTime  @default(now()) @map(name: "created_at")
+  updatedAt          DateTime  @default(now()) @map(name: "updated_at")
+
+  @@index([providerAccountId], name: "providerAccountId")
+  @@index([providerId], name: "providerId")
+  @@index([userId], name: "userId")
+  @@map(name: "accounts")
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  userId       Int      @map(name: "user_id")
+  expires      DateTime
+  sessionToken String   @unique @map(name: "session_token")
+  accessToken  String   @unique @map(name: "access_token")
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  updatedAt    DateTime @default(now()) @map(name: "updated_at")
+
+  @@map(name: "sessions")
+}
+
 model User {
-  id Int @default(autoincrement()) @id
-  name String @db.VarChar(100)
-  email String? @db.VarChar(100) @unique
-  projects Project[]
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @updatedAt @map(name: "updated_at")
+  id            Int       @id @default(autoincrement())
+  name          String    @db.VarChar(100)
+  email         String?   @unique @db.VarChar(100)
+  emailVarified DateTime? @map(name: "email_varified")
+  image         String?
+  projects      Project[]
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+
   @@map(name: "users")
 }
 
 model Project {
-  id Int @default(autoincrement()) @id
-  name String @db.VarChar(100)
-  user User @relation(fields: [userId], references: [id])
-  userId Int
-  tasks Task[]
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  tasks     Task[]
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @updatedAt @map(name: "updated_at")
+
   @@map(name: "projects")
 }
 
 model Task {
-  id Int @default(autoincrement()) @id
-  title String @db.VarChar(100)
-  description String? @db.Text
-  project Project @relation(fields: [projectId], references: [id])
-  projectId Int
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @updatedAt @map(name: "updated_at")
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(100)
+  description String?  @db.Text
+  project     Project  @relation(fields: [projectId], references: [id])
+  projectId   Int
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @updatedAt @map(name: "updated_at")
+
   @@map(name: "tasks")
 }
