@@ -9,7 +9,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "studio": "npx prisma studio --schema src/prisma/schema.prisma"
   },
   "dependencies": {
     "@apollo/client": "^3.4.15",
