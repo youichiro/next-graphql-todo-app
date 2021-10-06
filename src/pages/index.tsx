@@ -2,6 +2,8 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { gql, useQuery } from '@apollo/client'
 import Sidebar from '../components/Sidebar'
+import { useSession } from 'next-auth/client'
+import { sessionCache, sessionLoadingCache } from '../lib/cache'
 
 const FetchProjectsQuery = gql`
   query FetchProjects($userId: Int!) {
@@ -11,8 +13,11 @@ const FetchProjectsQuery = gql`
     }
   }
 `
-
 export default function Home() {
+  const [session, sessionLoading] = useSession()
+  sessionCache(session)
+  sessionLoadingCache(sessionLoading)
+
   const { data, loading, error } = useQuery(FetchProjectsQuery, {
     variables: { userId: 1 },
   });
