@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { gql, useQuery } from '@apollo/client'
-import Sidebar from '../components/Sidebar'
+import Sidebar from '../layouts/Sidebar'
 import { useSession } from 'next-auth/client'
 import { sessionCache, sessionLoadingCache } from '../lib/cache'
 
@@ -21,6 +21,8 @@ export default function Home() {
   const { data, loading, error } = useQuery(FetchProjectsQuery, {
     variables: { userId: 1 },
   });
+
+  if (sessionLoading) return <p>Validation session...</p>
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Oh no... {error.message}</p>

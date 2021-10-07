@@ -1,24 +1,14 @@
-import React from "react";
 import Link from 'next/link'
 import { useRouter } from "next/router";
 import { signOut } from 'next-auth/client'
 import { useReactiveVar } from "@apollo/client";
-import { sessionCache, sessionLoadingCache } from '../lib/cache'
+import { sessionCache } from '../lib/cache'
 
-const Sidebar: React.FC = () => {
+const Account: React.FC = () => {
   const router = useRouter()
   const isActive: (pathname: string) => boolean = (pathname) =>
-    router.pathname === pathname
+  router.pathname === pathname
   const session = useReactiveVar(sessionCache)
-  const sessionLoading = useReactiveVar(sessionLoadingCache)
-
-  if (sessionLoading) {
-    return (
-      <div>
-        <p>Validating session ...</p>
-      </div>
-    )
-  }
 
   if (!session) {
     return (
@@ -42,4 +32,4 @@ const Sidebar: React.FC = () => {
   }
 }
 
-export default Sidebar
+export default Account
