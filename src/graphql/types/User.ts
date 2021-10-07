@@ -7,6 +7,7 @@ export const User = objectType({
     t.nonNull.int('id')
     t.nonNull.string('name')
     t.string('email')
+    t.string('image')
     t.list.field('projects', {
       type: Project,
       async resolve(_parent, _args, ctx) {
