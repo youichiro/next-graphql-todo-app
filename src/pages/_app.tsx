@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import '../styles/pages/globals.css'
+import '../styles/pages/globals.scss'
 import { ApolloProvider } from '@apollo/client'
 import apolloClient from '../lib/apollo'
 import { ThemeProvider } from '@mui/material/styles'

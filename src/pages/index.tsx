@@ -1,4 +1,4 @@
-import styles from '../styles/pages/Home.module.css'
+import styles from '../styles/pages/Home.module.scss'
 import Sidebar from '../layouts/Sidebar'
 import { useSession } from 'next-auth/client'
 import { sessionCache, sessionLoadingCache } from '../lib/cache'
