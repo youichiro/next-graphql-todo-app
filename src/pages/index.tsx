@@ -1,4 +1,4 @@
-import styles from '../styles/pages/Home.module.scss'
+import styles from '../styles/pages/home.module.scss'
 import Sidebar from '../layouts/Sidebar'
 import { useSession } from 'next-auth/client'
 import { sessionCache, sessionLoadingCache } from '../lib/cache'
@@ -13,8 +13,10 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <main className={styles.main}>
+      <div className={styles.sidebar}>
         <Sidebar></Sidebar>
+      </div>
+      <main className={styles.main}>
         <Main />
       </main>
     </div>

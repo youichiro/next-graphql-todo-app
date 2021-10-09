@@ -1,6 +1,15 @@
+@import "../variables.scss";
+
 .container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  border-right: solid 1px $border;
 }
 
 .main {
-  display: flex;
+  flex: 1;
 }
