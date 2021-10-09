@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
 import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
-import { Box } from '@mui/system';
+import { Project } from '.prisma/client';
 
 const ProjectsQuery = gql`
   query Projects($userId: Int!) {
@@ -20,7 +20,7 @@ const ProjectList: React.FC = () => {
 
   return (
     <List sx={{ borderTop: 1, borderBottom: 1 }}>
-      {data.projects.map((project) => (
+      {data.projects.map((project: Project) => (
         <ListItem key={project.id} disablePadding>
           <ListItemButton>
             <ListItemText primary={project.name} />
