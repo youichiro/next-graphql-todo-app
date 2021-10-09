@@ -1,8 +1,8 @@
-import styles from '../styles/pages/home.module.scss';
-import Sidebar from '../layouts/Sidebar';
 import { useSession } from 'next-auth/client';
-import { sessionCache, sessionLoadingCache } from '../lib/cache';
 import Main from '../layouts/Main';
+import Sidebar from '../layouts/Sidebar';
+import { sessionCache, sessionLoadingCache } from '../lib/cache';
+import styles from '../styles/pages/home.module.scss';
 
 export default function Home() {
   const [session, sessionLoading] = useSession();

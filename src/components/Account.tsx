@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { useReactiveVar } from '@apollo/client';
+import { Logout, Person } from '@mui/icons-material';
+import { Avatar, IconButton, Tooltip, Menu, MenuItem, Button, ListItemIcon } from '@mui/material';
+import { signOut } from 'next-auth/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { signOut } from 'next-auth/client';
-import { useReactiveVar } from '@apollo/client';
+import * as React from 'react';
 import { sessionCache } from '../lib/cache';
-import { Avatar, IconButton, Tooltip, Menu, MenuItem, Button, ListItemIcon } from '@mui/material';
-import { Logout, Person } from '@mui/icons-material';
 
 const Account: React.FC = () => {
   const router = useRouter();
