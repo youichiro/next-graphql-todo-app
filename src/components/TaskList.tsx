@@ -1,10 +1,12 @@
 import { gql, useQuery } from "@apollo/client"
+import { Checkbox, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 
 const TasksQuery = gql`
   query Tasks($projectId: Int!) {
     tasks(projectId: $projectId) {
       id
       title
+      done
     }
   }
 `
@@ -17,16 +19,22 @@ const TaskList: React.FC = () => {
   if (error) return <p>Error... {error.message}</p>
 
   return (
-    <>
-      <p>TaskList.tsx</p>
-      <ul>
-        {data.tasks.map(task => (
-          <li key={task.id}>
-            <p>{task.title}</p>
-          </li>
-        ))}
-      </ul>
-    </>
+    <List>
+      {data.tasks.map(task => (
+        <ListItem key={task.id} disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Checkbox
+                edge="start"
+                checked={task.done}
+                disableRipple
+              />
+            </ListItemIcon>
+            <ListItemText primary={task.title} />
+          </ListItemButton>
+        </ListItem>
+      ))}
+    </List>
   )
 }
 
