@@ -22,6 +22,7 @@ type Query {
 
 type Task {
   description: String
+  done: Boolean!
   id: Int!
   project: Project!
   title: String!
