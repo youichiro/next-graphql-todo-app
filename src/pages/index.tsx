@@ -1,15 +1,33 @@
-import { useSession } from 'next-auth/client';
+import { GetServerSideProps } from 'next';
+import { getSession, useSession } from 'next-auth/client';
 import Main from '../layouts/Main';
 import Sidebar from '../layouts/Sidebar';
-import { sessionCache, sessionLoadingCache } from '../lib/cache';
 import styles from '../styles/pages/home.module.scss';
 
-export default function Home() {
-  const [session, sessionLoading] = useSession();
-  sessionCache(session);
-  sessionLoadingCache(sessionLoading);
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  console.log('index.tsx getServerSideProps');
+  const session = await getSession(ctx);
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/api/auth/signin',
+        permanent: false,
+      }
+    };
+  }
+  return {
+    props: {
+      session: session
+    },
+  };
+};
 
-  if (sessionLoading) return <p>Validation session...</p>;
+export default function Home() {
+  const [session, loading] = useSession();
+
+  if (loading) return <p>Validation session...</p>;
+
+  if (!session) return <p>Session nothing...</p>
 
   return (
     <div className={styles.container}>

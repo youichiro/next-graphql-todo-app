@@ -1,16 +1,10 @@
-import { useReactiveVar } from '@apollo/client';
-import { Logout, Person } from '@mui/icons-material';
+import { Logout } from '@mui/icons-material';
 import { Avatar, IconButton, Tooltip, Menu, MenuItem, Button, ListItemIcon } from '@mui/material';
-import { signOut } from 'next-auth/client';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { signOut, useSession } from 'next-auth/client';
 import * as React from 'react';
-import { sessionCache } from '../lib/cache';
 
 const Account: React.FC = () => {
-  const router = useRouter();
-  const isActive: (pathname: string) => boolean = (pathname) => router.pathname === pathname;
-  const session = useReactiveVar(sessionCache);
+  const [session, loading] = useSession();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -21,18 +15,7 @@ const Account: React.FC = () => {
     setAnchorEl(null);
   };
 
-  if (!session) {
-    return (
-      <div>
-        <Avatar>
-          <Person />
-        </Avatar>
-        <Link href='/api/auth/signin'>
-          <a data-active={isActive('/signup')}>Log in</a>
-        </Link>
-      </div>
-    );
-  }
+  if (loading || !session) return null;
 
   if (session) {
     return (
