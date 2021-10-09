@@ -1,4 +1,4 @@
-import { makeVar } from '@apollo/client'
+import { makeVar } from '@apollo/client';
 
-export const sessionCache = makeVar(null)
-export const sessionLoadingCache = makeVar(null)
+export const sessionCache = makeVar(null);
+export const sessionLoadingCache = makeVar(null);

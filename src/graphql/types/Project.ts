@@ -1,11 +1,11 @@
-import { objectType, extendType, nonNull, intArg, stringArg } from 'nexus'
-import { User } from './User'
+import { objectType, extendType, nonNull, intArg, stringArg } from 'nexus';
+import { User } from './User';
 
 export const Project = objectType({
   name: 'Project',
   definition(t) {
-    t.nonNull.int('id')
-    t.nonNull.string('name')
+    t.nonNull.int('id');
+    t.nonNull.string('name');
     t.nonNull.field('user', {
       type: User,
       resolve(parent, _args, ctx) {
@@ -15,11 +15,11 @@ export const Project = objectType({
               id: parent.id,
             },
           })
-          .user()
+          .user();
       },
-    })
+    });
   },
-})
+});
 
 export const ProjectQuery = extendType({
   type: 'Query',
@@ -35,12 +35,12 @@ export const ProjectQuery = extendType({
             userId: {
               equals: args.userId,
             },
-          }
-        })
+          },
+        });
       },
-    })
+    });
   },
-})
+});
 
 export const CreateProjectMutation = extendType({
   type: 'Mutation',
@@ -57,12 +57,12 @@ export const CreateProjectMutation = extendType({
             name: args.name,
             user: {
               connect: {
-                id: args.userId
-              }
-            }
-          }
-        })
+                id: args.userId,
+              },
+            },
+          },
+        });
       },
-    })
+    });
   },
-})
+});

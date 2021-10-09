@@ -1,5 +1,5 @@
-import Account from "../components/Account"
-import ProjectList from "../components/ProjectList"
+import Account from '../components/Account';
+import ProjectList from '../components/ProjectList';
 
 const Sidebar: React.FC = () => {
   return (
@@ -7,7 +7,7 @@ const Sidebar: React.FC = () => {
       <Account />
       <ProjectList />
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

@@ -1,13 +1,13 @@
-import { objectType, extendType, nonNull, stringArg } from 'nexus'
-import { Project } from './Project'
+import { objectType, extendType, nonNull, stringArg } from 'nexus';
+import { Project } from './Project';
 
 export const User = objectType({
   name: 'User',
   definition(t) {
-    t.nonNull.int('id')
-    t.nonNull.string('name')
-    t.string('email')
-    t.string('image')
+    t.nonNull.int('id');
+    t.nonNull.string('name');
+    t.string('email');
+    t.string('image');
     t.list.field('projects', {
       type: Project,
       async resolve(_parent, _args, ctx) {
@@ -17,11 +17,11 @@ export const User = objectType({
               id: _parent.id,
             },
           })
-          .projects()
+          .projects();
       },
-    })
+    });
   },
-})
+});
 
 export const UserQuery = extendType({
   type: 'Query',
@@ -29,11 +29,11 @@ export const UserQuery = extendType({
     t.nonNull.list.field('users', {
       type: User,
       resolve(_parent, _args, ctx) {
-        return ctx.prisma.user.findMany()
-      }
-    })
-  }
-})
+        return ctx.prisma.user.findMany();
+      },
+    });
+  },
+});
 
 export const CreateUserMutation = extendType({
   type: 'Mutation',
@@ -49,9 +49,9 @@ export const CreateUserMutation = extendType({
           data: {
             name: args.name,
             email: args.email,
-          }
-        })
-      }
-    })
-  }
-})
+          },
+        });
+      },
+    });
+  },
+});

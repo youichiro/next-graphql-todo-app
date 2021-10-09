@@ -1,15 +1,15 @@
-import styles from '../styles/pages/home.module.scss'
-import Sidebar from '../layouts/Sidebar'
-import { useSession } from 'next-auth/client'
-import { sessionCache, sessionLoadingCache } from '../lib/cache'
-import Main from '../layouts/Main'
+import styles from '../styles/pages/home.module.scss';
+import Sidebar from '../layouts/Sidebar';
+import { useSession } from 'next-auth/client';
+import { sessionCache, sessionLoadingCache } from '../lib/cache';
+import Main from '../layouts/Main';
 
 export default function Home() {
-  const [session, sessionLoading] = useSession()
-  sessionCache(session)
-  sessionLoadingCache(sessionLoading)
+  const [session, sessionLoading] = useSession();
+  sessionCache(session);
+  sessionLoadingCache(sessionLoading);
 
-  if (sessionLoading) return <p>Validation session...</p>
+  if (sessionLoading) return <p>Validation session...</p>;
 
   return (
     <div className={styles.container}>
@@ -20,5 +20,5 @@ export default function Home() {
         <Main />
       </main>
     </div>
-  )
+  );
 }

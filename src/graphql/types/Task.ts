@@ -1,13 +1,13 @@
-import { extendType, intArg, nonNull, objectType, stringArg } from "nexus";
-import { Project } from "./Project";
+import { extendType, intArg, nonNull, objectType, stringArg } from 'nexus';
+import { Project } from './Project';
 
 export const Task = objectType({
   name: 'Task',
   definition(t) {
-    t.nonNull.int('id')
-    t.nonNull.string('title')
-    t.string('description')
-    t.nonNull.boolean('done')
+    t.nonNull.int('id');
+    t.nonNull.string('title');
+    t.string('description');
+    t.nonNull.boolean('done');
     t.nonNull.field('project', {
       type: Project,
       resolve(parent, _args, ctx) {
@@ -17,11 +17,11 @@ export const Task = objectType({
               id: parent.id,
             },
           })
-          .project()
+          .project();
       },
-    })
+    });
   },
-})
+});
 
 export const TaskQuery = extendType({
   type: 'Query',
@@ -37,12 +37,12 @@ export const TaskQuery = extendType({
             projectId: {
               equals: args.projectId,
             },
-          }
-        })
+          },
+        });
       },
-    })
-  }
-})
+    });
+  },
+});
 
 export const CreateTaskMutation = extendType({
   type: 'Mutation',
@@ -61,12 +61,12 @@ export const CreateTaskMutation = extendType({
             description: args.description,
             project: {
               connect: {
-                id: args.projectId
-              }
-            }
-          }
-        })
-      }
-    })
-  }
-})
+                id: args.projectId,
+              },
+            },
+          },
+        });
+      },
+    });
+  },
+});

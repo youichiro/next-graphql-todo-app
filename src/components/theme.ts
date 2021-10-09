@@ -1,5 +1,5 @@
-import { createTheme } from '@mui/material/styles'
-import { teal, orange, red } from '@mui/material/colors'
+import { createTheme } from '@mui/material/styles';
+import { teal, orange, red } from '@mui/material/colors';
 
 const theme = createTheme({
   palette: {
@@ -15,4 +15,4 @@ const theme = createTheme({
   },
 });
 
-export default theme
+export default theme;
