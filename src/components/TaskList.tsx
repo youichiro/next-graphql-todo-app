@@ -7,6 +7,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
+import { Task } from '.prisma/client';
 
 const TasksQuery = gql`
   query Tasks($projectId: Int!) {
@@ -27,7 +28,7 @@ const TaskList: React.FC = () => {
 
   return (
     <List>
-      {data.tasks.map((task) => (
+      {data.tasks.map((task: Task) => (
         <ListItem key={task.id} disablePadding>
           <ListItemButton>
             <ListItemIcon>

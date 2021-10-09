@@ -1,10 +1,10 @@
 import createEmotionServer from '@emotion/server/create-instance';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
 import React from 'react';
 import createEmotionCache from '../components/createEmotionCache';
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps(ctx: DocumentContext) {
     const originalRenderPage = ctx.renderPage;
     const cache = createEmotionCache();
     const { extractCriticalToChunks } = createEmotionServer(cache);
