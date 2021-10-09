@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node prisma/seed.ts",
+    "schema": "src/prisma/schema.prisma"
   },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "studio": "npx prisma studio --schema src/prisma/schema.prisma"
+    "lint": "next lint"
   },
   "dependencies": {
     "@apollo/client": "^3.4.15",
