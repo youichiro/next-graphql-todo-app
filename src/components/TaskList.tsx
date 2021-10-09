@@ -1,5 +1,12 @@
 import { gql, useQuery } from '@apollo/client';
-import { Checkbox, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import {
+  Checkbox,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material';
 
 const TasksQuery = gql`
   query Tasks($projectId: Int!) {
