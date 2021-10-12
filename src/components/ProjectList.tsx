@@ -1,7 +1,6 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { useSession } from 'next-auth/client';
-import { selectedProjectIdCache } from '../lib/cache';
 import { Project } from '.prisma/client';
 
 const ProjectsQuery = gql`
@@ -10,26 +9,47 @@ const ProjectsQuery = gql`
       id
       name
     }
+    selectedProject(userId: $userId) {
+      project {
+        id
+      }
+    }
+  }
+`;
+
+const UPSERT_SELECTED_PROJECT = gql`
+  mutation UpsertSelectedPorject($userId: Int!, $projectId: Int!) {
+    upsertSelectedProject(userId: $userId, projectId: $projectId) {
+      id
+    }
   }
 `;
 
 const ProjectList: React.FC = () => {
   const [session, _] = useSession();
-  const { data, loading, error } = useQuery(ProjectsQuery, {
+  const query = useQuery(ProjectsQuery, {
     variables: { userId: session.userId },
   });
+  const [upsertSelectedProject, mutation] = useMutation(UPSERT_SELECTED_PROJECT, {
+    refetchQueries: [
+      ProjectsQuery,
+    ]
+  });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error... {error.message}</p>;
+  if (query.loading) return <p>Loading...</p>;
+  if (query.error) return <p>Loading error! {query.error.message}</p>;
 
-  const handleClick = (projectId) => {
-    selectedProjectIdCache(projectId);
+  if (mutation.loading) return <p>Submitting...</p>;
+  if (mutation.error) return <p>Submission error! {mutation.error.message}</p>;
+
+  const handleClick = (projectId: number) => {
+    upsertSelectedProject({ variables: { userId: session.userId, projectId: projectId } });
   };
 
   return (
     <List sx={{ borderTop: 1, borderBottom: 1 }}>
-      {data.projects.map((project: Project) => (
-        <ListItem key={project.id} disablePadding onClick={() => handleClick(project.id)}>
+      {query.data.projects.map((project: Project) => (
+        <ListItem key={project.id} disablePadding onClick={() => handleClick(project.id)} selected={project.id === query.data.selectedProject.project.id}>
           <ListItemButton>
             <ListItemText primary={project.name} />
           </ListItemButton>

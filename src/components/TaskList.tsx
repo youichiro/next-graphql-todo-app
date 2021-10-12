@@ -1,4 +1,4 @@
-import { gql, useQuery, useReactiveVar } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import {
   Checkbox,
   List,
@@ -7,22 +7,25 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
-import { selectedProjectIdCache } from '../lib/cache';
+import { useSession } from 'next-auth/client';
 import { Task } from '.prisma/client';
 
-const TasksQuery = gql`
-  query Tasks($projectId: Int!) {
-    tasks(projectId: $projectId) {
-      id
-      title
-      done
+const SelectedProjectQuery = gql`
+  query SelectedProject($userId: Int!) {
+    selectedProject(userId: $userId) {
+      project {
+        tasks {
+          id
+          title
+        }
+      }
     }
   }
 `;
 const TaskList: React.FC = () => {
-  const projectId = useReactiveVar(selectedProjectIdCache);
-  const { data, loading, error } = useQuery(TasksQuery, {
-    variables: { projectId: projectId },
+  const [session, _] = useSession();
+  const { data, loading, error } = useQuery(SelectedProjectQuery, {
+    variables: { userId: session.userId },
   });
 
   if (loading) return <p>Loading...</p>;
@@ -30,7 +33,7 @@ const TaskList: React.FC = () => {
 
   return (
     <List>
-      {data.tasks.map((task: Task) => (
+      {data.selectedProject.project.tasks.map((task: Task) => (
         <ListItem key={task.id} disablePadding>
           <ListItemButton>
             <ListItemIcon>

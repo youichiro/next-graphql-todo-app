@@ -1,4 +1,5 @@
 import { objectType, extendType, nonNull, intArg, stringArg } from 'nexus';
+import { Task } from './Task';
 import { User } from './User';
 
 export const Project = objectType({
@@ -16,6 +17,18 @@ export const Project = objectType({
             },
           })
           .user();
+      },
+    });
+    t.nonNull.list.field('tasks', {
+      type: Task,
+      resolve(parent, _args, ctx) {
+        return ctx.prisma.project
+          .findUnique({
+            where: {
+              id: parent.id,
+            },
+          })
+          .tasks();
       },
     });
   },

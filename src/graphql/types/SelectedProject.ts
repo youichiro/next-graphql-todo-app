@@ -44,7 +44,14 @@ export const SelectedProjectQuery = extendType({
       resolve(_parent, args, ctx) {
         return ctx.prisma.selectedProject.findUnique({
           where: {
-            userId: args.userId
+            userId: args.userId,
+          },
+          include: {
+            project: {
+              include: {
+                tasks: true,
+              },
+            },
           },
         });
       },
