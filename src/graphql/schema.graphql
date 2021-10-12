@@ -6,6 +6,7 @@ type Mutation {
   createProject(name: String!, userId: Int!): Project!
   createTask(description: String, projectId: Int!, title: String!): Task!
   createUser(email: String, name: String!): User!
+  upsertSelectedProject(projectId: Int!, userId: Int!): SelectedProject!
 }
 
 type Project {
@@ -16,8 +17,15 @@ type Project {
 
 type Query {
   projects(userId: Int!): [Project]!
+  selectedProject(userId: Int!): SelectedProject!
   tasks(projectId: Int!): [Task]!
   users: [User]!
+}
+
+type SelectedProject {
+  id: Int!
+  project: Project!
+  user: User!
 }
 
 type Task {

@@ -39,14 +39,15 @@ model Session {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
-  name          String    @db.VarChar(100)
-  email         String?   @unique @db.VarChar(100)
-  emailVarified DateTime? @map(name: "email_varified")
-  image         String?
-  projects      Project[]
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  id              Int              @id @default(autoincrement())
+  name            String           @db.VarChar(100)
+  email           String?          @unique @db.VarChar(100)
+  emailVarified   DateTime?        @map(name: "email_varified")
+  image           String?
+  projects        Project[]
+  selectedProject SelectedProject?
+  createdAt       DateTime         @default(now()) @map(name: "created_at")
+  updatedAt       DateTime         @updatedAt @map(name: "updated_at")
 
   @@map(name: "users")
 }
@@ -60,7 +61,20 @@ model Project {
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @updatedAt @map(name: "updated_at")
 
+  SelectedProject SelectedProject[]
   @@map(name: "projects")
+}
+
+model SelectedProject {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int      @unique
+  project   Project  @relation(fields: [projectId], references: [id])
+  projectId Int
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+
+  @@map(name: "selected_projects")
 }
 
 model Task {
