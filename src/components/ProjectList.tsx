@@ -15,7 +15,7 @@ const ProjectsQuery = gql`
 const ProjectList: React.FC = () => {
   const [session, _] = useSession();
   const { data, loading, error } = useQuery(ProjectsQuery, {
-    variables: { userId: session.id },
+    variables: { userId: session.userId },
   });
 
   if (loading) return <p>Loading...</p>;
