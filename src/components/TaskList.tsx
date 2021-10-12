@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery, useReactiveVar } from '@apollo/client';
 import {
   Checkbox,
   List,
@@ -7,6 +7,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
+import { selectedProjectIdCache } from '../lib/cache';
 import { Task } from '.prisma/client';
 
 const TasksQuery = gql`
@@ -19,8 +20,9 @@ const TasksQuery = gql`
   }
 `;
 const TaskList: React.FC = () => {
+  const projectId = useReactiveVar(selectedProjectIdCache);
   const { data, loading, error } = useQuery(TasksQuery, {
-    variables: { projectId: 1 },
+    variables: { projectId: projectId },
   });
 
   if (loading) return <p>Loading...</p>;
