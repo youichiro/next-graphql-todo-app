@@ -39,7 +39,6 @@ const ProjectList: React.FC = () => {
   if (query.loading) return <p>Loading...</p>;
   if (query.error) return <p>Loading error! {query.error.message}</p>;
 
-  // if (mutation.loading) return <p>Submitting...</p>;
   if (mutation.error) return <p>Submission error! {mutation.error.message}</p>;
 
   const handleClick = (projectId: number) => {
