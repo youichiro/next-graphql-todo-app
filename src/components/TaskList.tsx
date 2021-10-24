@@ -16,6 +16,7 @@ const SelectedProjectQuery = gql`
     }
   }
 `;
+
 const TaskList: React.FC = () => {
   const [session, _] = useSession();
   const { data, loading, error } = useQuery(SelectedProjectQuery, {
