@@ -36,7 +36,7 @@ export const SelectedProject = objectType({
 export const SelectedProjectQuery = extendType({
   type: 'Query',
   definition(t) {
-    t.nonNull.field('selectedProject', {
+    t.field('selectedProject', {
       type: SelectedProject,
       args: {
         userId: nonNull(intArg()),

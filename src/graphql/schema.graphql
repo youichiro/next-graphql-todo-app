@@ -18,7 +18,7 @@ type Project {
 
 type Query {
   projects(userId: Int!): [Project]!
-  selectedProject(userId: Int!): SelectedProject!
+  selectedProject(userId: Int!): SelectedProject
   tasks(projectId: Int!): [Task]!
   users: [User]!
 }

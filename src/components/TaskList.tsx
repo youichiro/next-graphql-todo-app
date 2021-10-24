@@ -1,13 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
-import {
-  Checkbox,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from '@mui/material';
+import { List } from '@mui/material';
 import { useSession } from 'next-auth/client';
+import TaskListItem from './TaskListItem';
 import { Task } from '.prisma/client';
 
 const SelectedProjectQuery = gql`
@@ -31,17 +25,12 @@ const TaskList: React.FC = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error... {error.message}</p>;
 
+  if (!data.selectedProject) return <p>Select your project.</p>;
+
   return (
     <List>
       {data.selectedProject.project.tasks.map((task: Task) => (
-        <ListItem key={task.id} disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <Checkbox edge='start' checked={task.done} disableRipple />
-            </ListItemIcon>
-            <ListItemText primary={task.title} />
-          </ListItemButton>
-        </ListItem>
+        <TaskListItem key={task.id} task={task} />
       ))}
     </List>
   );

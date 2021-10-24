@@ -1,6 +1,7 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { List } from '@mui/material';
 import { useSession } from 'next-auth/client';
+import ProjectListItem from './ProjectListItem';
 import { Project } from '.prisma/client';
 
 const ProjectsQuery = gql`
@@ -31,9 +32,7 @@ const ProjectList: React.FC = () => {
     variables: { userId: session.userId },
   });
   const [upsertSelectedProject, mutation] = useMutation(UPSERT_SELECTED_PROJECT, {
-    refetchQueries: [
-      ProjectsQuery,
-    ]
+    refetchQueries: [ProjectsQuery],
   });
 
   if (query.loading) return <p>Loading...</p>;
@@ -48,11 +47,12 @@ const ProjectList: React.FC = () => {
   return (
     <List sx={{ borderTop: 1, borderBottom: 1 }}>
       {query.data.projects.map((project: Project) => (
-        <ListItem key={project.id} disablePadding onClick={() => handleClick(project.id)} selected={project.id === query.data.selectedProject.project.id}>
-          <ListItemButton>
-            <ListItemText primary={project.name} />
-          </ListItemButton>
-        </ListItem>
+        <ProjectListItem
+          key={project.id}
+          project={project}
+          selectedProjectId={query.data.selectedProject?.project.id}
+          handleClick={handleClick}
+        />
       ))}
     </List>
   );
