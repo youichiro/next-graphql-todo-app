@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { getSession, useSession } from 'next-auth/client';
+import { createContext } from 'react';
 import Main from '../layouts/Main';
 import Sidebar from '../layouts/Sidebar';
 import styles from '../styles/pages/home.module.scss';
@@ -15,9 +16,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
   return {
-    props: {}
-  }
+    props: {},
+  };
 };
+
+export const SessionContext = createContext({
+  session: null,
+  loading: true
+});
 
 export default function Home() {
   const [session, loading] = useSession();
@@ -26,14 +32,15 @@ export default function Home() {
   if (!session) return <p>Session nothing...</p>;
 
   return (
-    <div className={styles.container}>
-      <h1>HOGE</h1>
-      <div className={styles.sidebar}>
-        <Sidebar></Sidebar>
+    <SessionContext.Provider value={{ session, loading }}>
+      <div className={styles.container}>
+        <div className={styles.sidebar}>
+          <Sidebar></Sidebar>
+        </div>
+        <main className={styles.main}>
+          <Main />
+        </main>
       </div>
-      <main className={styles.main}>
-        <Main />
-      </main>
-    </div>
+    </SessionContext.Provider>
   );
 }

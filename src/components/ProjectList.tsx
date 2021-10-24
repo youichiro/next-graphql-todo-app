@@ -1,6 +1,7 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { List } from '@mui/material';
-import { useSession } from 'next-auth/client';
+import { useContext } from 'react';
+import { SessionContext } from '../pages';
 import ProjectListItem from './ProjectListItem';
 import { Project } from '.prisma/client';
 
@@ -27,7 +28,7 @@ const UPSERT_SELECTED_PROJECT = gql`
 `;
 
 const ProjectList: React.FC = () => {
-  const [session, _] = useSession();
+  const { session } = useContext(SessionContext);
   const query = useQuery(ProjectsQuery, {
     variables: { userId: session.userId },
   });

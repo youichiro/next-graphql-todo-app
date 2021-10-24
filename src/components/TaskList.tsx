@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import { List } from '@mui/material';
-import { useSession } from 'next-auth/client';
+import { useContext } from 'react';
+import { SessionContext } from '../pages';
 import TaskListItem from './TaskListItem';
 import { Task } from '.prisma/client';
 
@@ -18,7 +19,7 @@ const SelectedProjectQuery = gql`
 `;
 
 const TaskList: React.FC = () => {
-  const [session, _] = useSession();
+  const { session } = useContext(SessionContext);
   const { data, loading, error } = useQuery(SelectedProjectQuery, {
     variables: { userId: session.userId },
   });

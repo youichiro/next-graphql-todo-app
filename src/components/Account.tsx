@@ -1,10 +1,12 @@
 import { Logout } from '@mui/icons-material';
 import { Avatar, IconButton, Tooltip, Menu, MenuItem, Button, ListItemIcon } from '@mui/material';
-import { signOut, useSession } from 'next-auth/client';
+import { signOut } from 'next-auth/client';
 import * as React from 'react';
+import { useContext } from 'react';
+import { SessionContext } from '../pages';
 
 const Account: React.FC = () => {
-  const [session, loading] = useSession();
+  const { session } = useContext(SessionContext);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -14,8 +16,6 @@ const Account: React.FC = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  if (loading || !session) return null;
 
   if (session) {
     return (
