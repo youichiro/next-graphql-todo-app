@@ -27,6 +27,7 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
+      <h1>HOGE</h1>
       <div className={styles.sidebar}>
         <Sidebar></Sidebar>
       </div>
