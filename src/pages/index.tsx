@@ -28,7 +28,7 @@ export const SessionContext = createContext({
 export default function Home() {
   const [session, loading] = useSession();
 
-  if (loading) return <p>Validation session...</p>;
+  if (loading) return <p>Session loading...</p>;
   if (!session) return <p>Session nothing...</p>;
 
   return (
