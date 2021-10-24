@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import ProjectListItem from "../src/components/ProjectListItem"
 import { Project } from ".prisma/client"
 
-const dummyProject: Project = {
+const project: Project = {
   id: 1,
   name: 'a project name',
   userId: 1,
@@ -11,8 +11,8 @@ const dummyProject: Project = {
 };
 
 describe('<ProjectListItem />', () => {
-  it('hoge', () => {
-    render(<ProjectListItem project={dummyProject} selectedProjectId={1} handleClick={() => null} />)
+  it('display a project name', () => {
+    render(<ProjectListItem project={project} selectedProjectId={1} handleClick={() => null} />)
     expect(screen.getByText('a project name'));
   })
 })
