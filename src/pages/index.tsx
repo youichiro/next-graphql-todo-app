@@ -1,8 +1,9 @@
 import { GetServerSideProps } from 'next';
 import { getSession, useSession } from 'next-auth/client';
 import { createContext } from 'react';
-import Main from '../layouts/Main';
-import Sidebar from '../layouts/Sidebar';
+import Account from '../components/Account';
+import ProjectList from '../components/ProjectList';
+import TaskList from '../components/TaskList';
 import styles from '../styles/pages/home.module.scss';
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -22,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 export const SessionContext = createContext({
   session: null,
-  loading: true
+  loading: true,
 });
 
 export default function Home() {
@@ -35,10 +36,11 @@ export default function Home() {
     <SessionContext.Provider value={{ session, loading }}>
       <div className={styles.container}>
         <div className={styles.sidebar}>
-          <Sidebar></Sidebar>
+          <Account />
+          <ProjectList />
         </div>
         <main className={styles.main}>
-          <Main />
+          <TaskList />
         </main>
       </div>
     </SessionContext.Provider>
