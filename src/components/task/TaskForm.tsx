@@ -2,7 +2,7 @@ import { Box, Input, FormControl, Button, Stack } from '@chakra-ui/react';
 import { Formik, Field, Form } from 'formik';
 
 type Props = {
-  handleSubmit: (title: string) => void;
+  handleSubmit: (title: string, resetForm: () => void) => void;
 };
 
 const TaskForm: React.FC<Props> = ({ handleSubmit }) => {
@@ -10,7 +10,7 @@ const TaskForm: React.FC<Props> = ({ handleSubmit }) => {
     <Box p='16px'>
       <Formik
         initialValues={{ taskName: '' }}
-        onSubmit={(value, _) => handleSubmit(value.taskName)}
+        onSubmit={(value, actions) => handleSubmit(value.taskName, actions.resetForm)}
       >
         <Form>
           <Stack direction='row' alignItems='center'>

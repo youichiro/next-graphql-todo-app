@@ -44,9 +44,10 @@ const TaskContainer: React.FC = () => {
   if (!query.data.selectedProject) return <p>Select your project.</p>;
   if (mutation.error) return <p>Submission error! {mutation.error.message}</p>;
 
-  const handleTaskSubmit = (title: string) => {
+  const handleTaskSubmit = (title: string, resetForm: () => void) => {
     if (title) {
       createTask({ variables: { projectId: query.data.selectedProject?.project.id, title: title } });
+      resetForm()
     }
   };
 
