@@ -1,4 +1,4 @@
-import { ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { ListItem } from '@chakra-ui/react';
 import { Project } from '.prisma/client';
 
 type Props = {
@@ -10,13 +10,10 @@ type Props = {
 const ProjectListItem: React.FC<Props> = ({ project, selectedProjectId, handleClick }) => {
   return (
     <ListItem
-      disablePadding
       onClick={() => handleClick(project.id)}
-      selected={project.id === selectedProjectId}
+      // selected={project.id === selectedProjectId}
     >
-      <ListItemButton>
-        <ListItemText primary={project.name} />
-      </ListItemButton>
+      {project.name}
     </ListItem>
   );
 };

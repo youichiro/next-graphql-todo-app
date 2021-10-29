@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
-import { List } from '@mui/material';
+import { List } from '@chakra-ui/react'
 import { useContext } from 'react';
 import { SessionContext } from '../pages';
 import TaskListItem from './TaskListItem';

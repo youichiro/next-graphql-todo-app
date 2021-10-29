@@ -1,10 +1,8 @@
 import { ApolloProvider } from '@apollo/client';
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
+import { ChakraProvider } from '@chakra-ui/react';
 import { Provider } from 'next-auth/client';
 import Head from 'next/head';
 import '../styles/globals.scss';
-import theme from '../components/theme';
 import apolloClient from '../lib/apollo';
 
 export default function MyApp({ Component, pageProps }) {
@@ -17,10 +15,9 @@ export default function MyApp({ Component, pageProps }) {
           <meta name='viewport' content='initial-scale=1, width=device-width' />
           <link rel='icon' href='/favicon.ico' />
         </Head>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
+        <ChakraProvider>
           <Component {...pageProps} />
-        </ThemeProvider>
+        </ChakraProvider>
       </ApolloProvider>
     </Provider>
   );

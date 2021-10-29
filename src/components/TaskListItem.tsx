@@ -1,4 +1,4 @@
-import { Checkbox, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { ListItem, Checkbox } from '@chakra-ui/react';
 import { Task } from '.prisma/client';
 
 type Props = {
@@ -7,13 +7,8 @@ type Props = {
 
 const TaskListItem: React.FC<Props> = ({ task }) => {
   return (
-    <ListItem key={task.id} disablePadding>
-      <ListItemButton>
-        <ListItemIcon>
-          <Checkbox edge='start' checked={task.done} disableRipple />
-        </ListItemIcon>
-        <ListItemText primary={task.title} />
-      </ListItemButton>
+    <ListItem key={task.id}>
+      <Checkbox isChecked={task.done}>{task.title}</Checkbox>
     </ListItem>
   );
 };

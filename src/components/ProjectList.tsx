@@ -1,5 +1,5 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { List } from '@mui/material';
+import { List } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { SessionContext } from '../pages';
 import ProjectListItem from './ProjectListItem';
@@ -46,7 +46,7 @@ const ProjectList: React.FC = () => {
   };
 
   return (
-    <List sx={{ borderTop: 1, borderBottom: 1 }}>
+    <List>
       {query.data.projects.map((project: Project) => (
         <ProjectListItem
           key={project.id}
