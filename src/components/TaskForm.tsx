@@ -4,7 +4,7 @@ import { Formik, Field, Form } from 'formik';
 import { useContext } from 'react';
 import { SessionContext } from '../pages';
 
-const ProjectQuery = gql`
+const SelectedProjectQuery = gql`
   query SelectedProject($userId: Int!) {
     selectedProject(userId: $userId) {
       project {
@@ -26,7 +26,7 @@ const CREATE_TASK = gql`
 
 const TaskForm: React.FC = () => {
   const { session } = useContext(SessionContext);
-  const query = useQuery(ProjectQuery, {
+  const query = useQuery(SelectedProjectQuery, {
     variables: { userId: session.userId },
   });
   const [createTask, mutation] = useMutation(CREATE_TASK);
