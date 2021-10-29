@@ -1,7 +1,7 @@
 import { Box, Flex } from '@chakra-ui/react';
 import Account from '../components/Account';
 import ProjectList from '../components/ProjectList';
-import TaskList from '../components/TaskList';
+import TaskContainer from '../components/task/TaskContainer';
 
 const HomeLayout: React.FC = () => {
   return (
@@ -15,7 +15,7 @@ const HomeLayout: React.FC = () => {
         </Box>
       </Flex>
       <Box flex='1'>
-        <TaskList />
+        <TaskContainer />
       </Box>
       <Box flex='1' borderLeft='solid 1px gray' p='16px'>
         <div>Task Detail</div>

@@ -14,6 +14,10 @@ const ProjectsQuery = gql`
     selectedProject(userId: $userId) {
       project {
         id
+        tasks {
+          id
+          title
+        }
       }
     }
   }
