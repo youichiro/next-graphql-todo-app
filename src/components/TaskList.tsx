@@ -1,7 +1,8 @@
 import { gql, useQuery } from '@apollo/client';
-import { List } from '@chakra-ui/react'
+import { List, Box } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { SessionContext } from '../pages';
+import TaskForm from './TaskForm';
 import TaskListItem from './TaskListItem';
 import { Task } from '.prisma/client';
 
@@ -30,11 +31,14 @@ const TaskList: React.FC = () => {
   if (!data.selectedProject) return <p>Select your project.</p>;
 
   return (
-    <List>
-      {data.selectedProject.project.tasks.map((task: Task) => (
-        <TaskListItem key={task.id} task={task} />
-      ))}
-    </List>
+    <Box>
+      <TaskForm />
+      <List>
+        {data.selectedProject.project.tasks.map((task: Task) => (
+          <TaskListItem key={task.id} task={task} />
+        ))}
+      </List>
+    </Box>
   );
 };
 
