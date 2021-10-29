@@ -33,6 +33,7 @@
     "@mui/icons-material": "^5.0.3",
     "@prisma/client": "^3.1.1",
     "apollo-server-micro": "^3.3.0",
+    "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "graphql": "^15.6.0",
     "graphql-middleware": "^6.1.8",
