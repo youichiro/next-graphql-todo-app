@@ -1,5 +1,4 @@
-import { AddIcon } from '@chakra-ui/icons';
-import { Avatar, Box, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import { Avatar, Box, Button, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { signOut } from 'next-auth/client';
 import * as React from 'react';
 import { useContext } from 'react';
@@ -9,15 +8,13 @@ const Account: React.FC = () => {
   const { session } = useContext(SessionContext);
 
   return (
-    <Box>
+    <Box p='16px'>
       <Menu>
-        <MenuButton as={Avatar}>
+        <MenuButton>
           <Avatar name='avatar' src={session.user.image} />
         </MenuButton>
         <MenuList>
-          <MenuItem icon={<AddIcon />} onClick={() => signOut()}>
-            Logout
-          </MenuItem>
+          <MenuItem onClick={() => signOut()}>Logout</MenuItem>
         </MenuList>
       </Menu>
     </Box>

@@ -2,7 +2,6 @@ import { ApolloProvider } from '@apollo/client';
 import { ChakraProvider } from '@chakra-ui/react';
 import { Provider } from 'next-auth/client';
 import Head from 'next/head';
-import '../styles/globals.scss';
 import apolloClient from '../lib/apollo';
 
 export default function MyApp({ Component, pageProps }) {

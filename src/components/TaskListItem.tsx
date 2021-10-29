@@ -7,8 +7,10 @@ type Props = {
 
 const TaskListItem: React.FC<Props> = ({ task }) => {
   return (
-    <ListItem key={task.id}>
-      <Checkbox isChecked={task.done}>{task.title}</Checkbox>
+    <ListItem key={task.id} px='16px' py='8px'>
+      <Checkbox colorScheme='teal' isChecked={task.done}s>
+        {task.title}
+      </Checkbox>
     </ListItem>
   );
 };

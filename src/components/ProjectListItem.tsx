@@ -8,10 +8,10 @@ type Props = {
 };
 
 const ProjectListItem: React.FC<Props> = ({ project, selectedProjectId, handleClick }) => {
+  const isSelected = project.id === selectedProjectId
   return (
-    <ListItem
+    <ListItem key={project.id} px='16px' py='8px' bg={isSelected ? 'gray.300' : ''}
       onClick={() => handleClick(project.id)}
-      // selected={project.id === selectedProjectId}
     >
       {project.name}
     </ListItem>

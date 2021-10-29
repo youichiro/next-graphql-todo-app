@@ -1,10 +1,7 @@
 import { GetServerSideProps } from 'next';
 import { getSession, useSession } from 'next-auth/client';
 import { createContext } from 'react';
-import Account from '../components/Account';
-import ProjectList from '../components/ProjectList';
-import TaskList from '../components/TaskList';
-import styles from '../styles/pages/home.module.scss';
+import HomeLayout from '../layouts/HomeLayout';
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const session = await getSession(ctx);
@@ -34,15 +31,7 @@ export default function Home() {
 
   return (
     <SessionContext.Provider value={{ session, loading }}>
-      <div className={styles.container}>
-        <div className={styles.sidebar}>
-          <Account />
-          <ProjectList />
-        </div>
-        <main className={styles.main}>
-          <TaskList />
-        </main>
-      </div>
+      <HomeLayout />
     </SessionContext.Provider>
   );
 }
