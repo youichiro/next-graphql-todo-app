@@ -3,6 +3,7 @@ import Account from '../components/account/Account';
 import ProjectContainer from '../components/project/ProjectContainer';
 import ProjectList from '../components/project/ProjectList';
 import TaskContainer from '../components/task/TaskContainer';
+import TaskDetail from '../components/task/TaskDetail';
 
 const HomeLayout: React.FC = () => {
   return (
@@ -17,9 +18,6 @@ const HomeLayout: React.FC = () => {
       </Flex>
       <Box flex='1'>
         <TaskContainer />
-      </Box>
-      <Box flex='1' borderLeft='solid 1px gray' p='16px'>
-        <div>Task Detail</div>
       </Box>
     </Flex>
   );

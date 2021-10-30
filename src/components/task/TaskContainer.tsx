@@ -1,9 +1,10 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { Box, Heading } from '@chakra-ui/react';
+import { Box, Flex, Heading } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { CreateTask } from '../../graphql/mutations';
 import { SelectedProjectQuery } from '../../graphql/queries';
 import { SessionContext } from '../../pages';
+import TaskDetail from './TaskDetail';
 import TaskForm from './TaskForm';
 import TaskList from './TaskList';
 
@@ -30,11 +31,18 @@ const TaskContainer: React.FC = () => {
   };
 
   return (
-    <Box>
-      <Heading size="md" pt='32px' pb='16px' px='16px'>{query.data.selectedProject.project.name}</Heading>
-      <TaskForm handleSubmit={handleTaskSubmit} />
-      <TaskList tasks={query.data.selectedProject.project.tasks} />
-    </Box>
+    <Flex>
+      <Box flex='1'>
+        <Heading size='md' pt='32px' pb='16px' px='16px'>
+          {query.data.selectedProject.project.name}
+        </Heading>
+        <TaskForm handleSubmit={handleTaskSubmit} />
+        <TaskList tasks={query.data.selectedProject.project.tasks} />
+      </Box>
+      <Box flex='1' borderLeft='solid 1px gray' p='16px'>
+        <TaskDetail />
+      </Box>
+    </Flex>
   );
 };
 
