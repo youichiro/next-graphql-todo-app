@@ -34,12 +34,18 @@ const ProjectListItem: React.FC<Props> = ({
     setEditable(false);
   };
 
-  const handleClick = () => {
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
     const check = window.confirm('Delete this project');
     if (check) {
-      handleDeleteProject(selectedProjectId);
+      handleDeleteProject(project.id);
     }
   };
+
+  const handleItemClick = (e: React.MouseEvent<HTMLLIElement>) => {
+    e.stopPropagation()
+    handleUpsertSelectedProject(project.id)
+  }
 
   return (
     <ListItem
@@ -47,7 +53,7 @@ const ProjectListItem: React.FC<Props> = ({
       px='16px'
       py='8px'
       bg={isSelected ? 'gray.300' : ''}
-      onClick={() => handleUpsertSelectedProject(project.id)}
+      onClick={handleItemClick}
       onDoubleClick={() => setEditable(true)}
     >
       {editable ? (
@@ -67,7 +73,7 @@ const ProjectListItem: React.FC<Props> = ({
             bg='none'
             _hover={{ color: 'red' }}
             _focus={{ boxShadow: 'none' }}
-            onClick={handleClick}
+            onClick={handleButtonClick}
           />
         </Stack>
       ) : (

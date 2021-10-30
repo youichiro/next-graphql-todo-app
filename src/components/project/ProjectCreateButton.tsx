@@ -1,5 +1,5 @@
 import { AddIcon } from '@chakra-ui/icons';
-import { Box, Center, IconButton } from '@chakra-ui/react';
+import { Center, IconButton } from '@chakra-ui/react';
 
 type Props = {
   handleCreateProject: () => void

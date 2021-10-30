@@ -32,7 +32,9 @@ const ProjectContainer: React.FC = () => {
   const [deleteProject, mutation4] = useMutation(DeleteProject, {
     refetchQueries: [ProjectsQuery],
   });
-  const [deleteSelectedProject, mutation5] = useMutation(DeleteSelectedProject);
+  const [deleteSelectedProject, mutation5] = useMutation(DeleteSelectedProject, {
+    refetchQueries: [ProjectsQuery],
+  });
 
   if (query.loading) return <Loading />;
   if (query.error) return <p>Loading error! {query.error.message}</p>;
@@ -43,8 +45,12 @@ const ProjectContainer: React.FC = () => {
   if (mutation4.error) return <p>{mutation4.error.message}</p>;
   if (mutation5.error) return <p>{mutation5.error.message}</p>;
 
+  const projects = sortProjects(query.data.projects);
+
   const handleUpsertSelectedProject = (projectId: number) => {
-    upsertSelectedProject({ variables: { userId: session.userId, projectId: projectId } });
+    if (projects.map((project) => project.id).includes(projectId)) {
+      upsertSelectedProject({ variables: { userId: session.userId, projectId: projectId } });
+    }
   };
 
   const handleCreateProject = () => {
@@ -52,15 +58,15 @@ const ProjectContainer: React.FC = () => {
   };
 
   const handleUpdateProject = (id: number, name: string) => {
-    updateProject({ variables: { id: id, name: name } });
+    updateProject({ variables: { userId: session.userId, id: id, name: name } });
   };
 
   const handleDeleteProject = (id: number) => {
-    deleteSelectedProject({ variables: { id: id } });
+    if (query.data.selectedProject) {
+      deleteSelectedProject({ variables: { id: query.data.selectedProject.id } });
+    }
     deleteProject({ variables: { id: id } });
   };
-
-  const projects = sortProjects(query.data.projects);
 
   return (
     <Stack spacing='32px'>

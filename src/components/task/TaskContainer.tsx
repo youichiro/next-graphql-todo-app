@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { Box, Flex, Heading, Spinner, Stack, Text } from '@chakra-ui/react';
+import { Box, Flex, Stack, Text } from '@chakra-ui/react';
 import { createContext, useContext, useState } from 'react';
 import { sortTask, filterIncomplateTasks, filterComplateTasks } from '../../functional/tasks';
 import { CreateTask, DeleteTask, UpdateTask } from '../../graphql/mutations';
