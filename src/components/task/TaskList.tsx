@@ -9,7 +9,7 @@ type Props = {
 
 const TaskList: React.FC<Props> = ({ tasks, setSelectedTask }) => {
   return (
-    <Box my='32px' px='16px'>
+    <Box>
       <List>
         {tasks.map((task: Task) => (
           <TaskListItem key={task.id} task={task} setSelectedTask={setSelectedTask} />

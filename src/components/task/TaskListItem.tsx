@@ -18,8 +18,8 @@ const TaskListItem: React.FC<Props> = ({ task, setSelectedTask }) => {
   return (
     <ListItem
       key={task.id}
-      px='16px'
       py='8px'
+      px='16px'
       onClick={() => handleClick(task)}
       bg={selectedTask?.id === task.id ? 'gray.100' : ''}
       borderRadius='8px'

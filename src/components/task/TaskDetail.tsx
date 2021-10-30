@@ -1,4 +1,4 @@
-import { Box, Text, Input } from '@chakra-ui/react';
+import { Box, Text, Input, Textarea, Stack } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { Task } from '.prisma/client';
 
@@ -8,44 +8,70 @@ type Props = {
 };
 
 const TaskDetail: React.FC<Props> = ({ selectedTask, handleTaskUpdateChange }) => {
-  const [value, setValue] = useState<string>(selectedTask?.title || '');
+  const [title, setTitle] = useState<string>(selectedTask?.title || '');
+  const [description, setDescription] = useState<string>(selectedTask?.title || '');
 
   useEffect(() => {
     if (selectedTask) {
-      setValue(selectedTask.title);
+      setTitle(selectedTask.title);
+      setDescription(selectedTask.description);
     }
   }, [selectedTask]);
 
-  const handleTaskTitleUpdateChange = (title: string) => {
+  const handleTaskTitleChange = (title: string) => {
     const task = {
       ...selectedTask,
-      title: title,
+      title: title || '',
     };
     handleTaskUpdateChange(task);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTaskDescriptionChange = (description: string) => {
+    const task = {
+      ...selectedTask,
+      description: description || '',
+    };
+    handleTaskUpdateChange(task);
+  };
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const title = e.target.value;
-    setValue(title);
-    handleTaskTitleUpdateChange(title);
+    setTitle(title);
+    handleTaskTitleChange(title);
+  };
+
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const description = e.target.value;
+    setDescription(description);
+    handleTaskDescriptionChange(description);
   };
 
   if (!selectedTask) return <p>Select your task.</p>;
 
   return (
-    <Box>
-      <Box mx='16px' my='32px'>
+    <Stack spacing='16px' h='100%'>
+      <Box>
         <Input
           variant='flushed'
-          value={value}
-          onChange={handleChange}
-          placeholder={!value ? 'untitled' : ''}
+          value={title}
+          onChange={handleTitleChange}
+          placeholder='untitled'
+          px='16px'
         />
       </Box>
-      <Text m='16px' color='gray.600'>
-        {selectedTask.description}
-      </Text>
-    </Box>
+      <Box flex='1'>
+        <Textarea
+          value={description}
+          onChange={handleDescriptionChange}
+          placeholder='Description'
+          h='100%'
+          borderColor='white'
+          _focus={{ boxShadow: 'none', border: 'none'}}
+          _hover={{ border: 'none' }}
+          border='none'
+        />
+      </Box>
+    </Stack>
   );
 };
 

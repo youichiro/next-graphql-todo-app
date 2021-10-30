@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { Box, Flex, Heading } from '@chakra-ui/react';
+import { Box, Flex, Heading, Stack } from '@chakra-ui/react';
 import { createContext, useContext, useState } from 'react';
 import { CreateTask, UpdateTask } from '../../graphql/mutations';
 import { SelectedProjectQuery } from '../../graphql/queries';
@@ -64,9 +64,9 @@ const TaskContainer: React.FC = () => {
 
   return (
     <TaskContext.Provider value={{ selectedTask }}>
-      <Flex h='100%'>
-        <Box flex='1'>
-          <Heading size='md' pt='32px' pb='16px' px='16px'>
+      <Flex h='100%' py='32px'>
+        <Stack flex='1' spacing='24px' mx='16px'>
+          <Heading size='md'>
             {query.data.selectedProject.project.name}
           </Heading>
           <TaskCreateForm handleSubmit={handleTaskCreateSubmit} />
@@ -74,8 +74,8 @@ const TaskContainer: React.FC = () => {
             tasks={query.data.selectedProject.project.tasks}
             setSelectedTask={setSelectedTask}
           />
-        </Box>
-        <Box flex='1' borderLeft='solid 1px whitesmoke'>
+        </Stack>
+        <Box flex='1' borderLeft='solid 1px whitesmoke' px='16px'>
           <TaskDetail selectedTask={selectedTask} handleTaskUpdateChange={handleTaskUpdateChange} />
         </Box>
       </Flex>
