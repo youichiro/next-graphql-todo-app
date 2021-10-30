@@ -1,6 +1,7 @@
 import { GetServerSideProps } from 'next';
 import { getSession, useSession } from 'next-auth/client';
 import { createContext } from 'react';
+import Loading from '../components/common/Loading';
 import HomeLayout from '../layouts/HomeLayout';
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -26,7 +27,7 @@ export const SessionContext = createContext({
 export default function Home() {
   const [session, loading] = useSession();
 
-  if (loading) return <p>Session loading...</p>;
+  if (loading) return <Loading />;
   if (!session) return <p>Session nothing...</p>;
 
   return (

@@ -7,9 +7,10 @@ type Props = {
   task: Task;
   setSelectedTask: (task: Task) => void;
   handleTaskUpdate: (task: Task) => void;
+  color?: string;
 };
 
-const TaskListItem: React.FC<Props> = ({ task, setSelectedTask, handleTaskUpdate }) => {
+const TaskListItem: React.FC<Props> = ({ task, setSelectedTask, handleTaskUpdate, color }) => {
   const { selectedTask } = useContext(TaskContext);
 
   const handleClick = (task: Task) => {
@@ -19,8 +20,8 @@ const TaskListItem: React.FC<Props> = ({ task, setSelectedTask, handleTaskUpdate
   const handleCheck = () => {
     const newTask: Task = {
       ...task,
-      done: !task.done
-    }
+      done: !task.done,
+    };
     handleTaskUpdate(newTask);
   };
 
@@ -32,6 +33,7 @@ const TaskListItem: React.FC<Props> = ({ task, setSelectedTask, handleTaskUpdate
       onClick={() => handleClick(task)}
       bg={selectedTask?.id === task.id ? 'gray.100' : ''}
       borderRadius='8px'
+      color={color}
     >
       <Checkbox
         colorScheme='teal'

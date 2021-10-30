@@ -6,9 +6,10 @@ type Props = {
   tasks: Task[];
   setSelectedTask: (task: Task) => void;
   handleTaskUpdate: (task: Task) => void;
+  color?: string
 };
 
-const TaskList: React.FC<Props> = ({ tasks, setSelectedTask, handleTaskUpdate }) => {
+const TaskList: React.FC<Props> = ({ tasks, setSelectedTask, handleTaskUpdate, color }) => {
   return (
     <Box>
       <List>
@@ -18,6 +19,7 @@ const TaskList: React.FC<Props> = ({ tasks, setSelectedTask, handleTaskUpdate })
             task={task}
             setSelectedTask={setSelectedTask}
             handleTaskUpdate={handleTaskUpdate}
+            color={color}
           />
         ))}
       </List>

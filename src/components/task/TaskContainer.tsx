@@ -1,10 +1,11 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { Box, Flex, Heading, Stack } from '@chakra-ui/react';
+import { Box, Flex, Heading, Spinner, Stack, Text } from '@chakra-ui/react';
 import { createContext, useContext, useState } from 'react';
-import { sortTask } from '../../functional/sortTasks';
+import { sortTask, filterIncomplateTasks, filterComplateTasks } from '../../functional/tasks';
 import { CreateTask, DeleteTask, UpdateTask } from '../../graphql/mutations';
 import { SelectedProjectQuery } from '../../graphql/queries';
 import { SessionContext } from '../../pages';
+import Loading from '../common/Loading';
 import TaskCreateForm from './TaskCreateForm';
 import TaskDeleteButton from './TaskDeleteButton';
 import TaskDetail from './TaskDetail';
@@ -32,7 +33,7 @@ const TaskContainer: React.FC = () => {
     refetchQueries: [SelectedProjectQuery],
   });
 
-  if (query.loading) return <p>Loading...</p>;
+  if (query.loading) return <Loading />;
   if (query.error) return <p>Error... {query.error.message}</p>;
   if (!query.data.selectedProject) return <p>Select your project.</p>;
   if (mutation1.error) return <p>Submission error! {mutation1.error.message}</p>;
@@ -76,6 +77,8 @@ const TaskContainer: React.FC = () => {
   };
 
   const tasks = sortTask(query.data.selectedProject.project.tasks);
+  const incomplateTasks = filterIncomplateTasks(tasks);
+  const complateTasks = filterComplateTasks(tasks);
 
   return (
     <TaskContext.Provider value={{ selectedTask }}>
@@ -84,9 +87,18 @@ const TaskContainer: React.FC = () => {
           <Heading size='md'>{query.data.selectedProject.project.name}</Heading>
           <TaskCreateForm handleTaskCreate={handleTaskCreate} />
           <TaskList
-            tasks={tasks}
+            tasks={incomplateTasks}
             setSelectedTask={setSelectedTask}
             handleTaskUpdate={handleTaskUpdate}
+          />
+          <Box pt='32px'>
+            <Text color='gray'>Complated</Text>
+          </Box>
+          <TaskList
+            tasks={complateTasks}
+            setSelectedTask={setSelectedTask}
+            handleTaskUpdate={handleTaskUpdate}
+            color='gray'
           />
         </Stack>
         <Stack flex='1' borderLeft='solid 1px whitesmoke' px='16px' py='32px' spacing='16px'>

@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { UpsertSelectedProject } from '../../graphql/mutations';
 import { ProjectsQuery } from '../../graphql/queries';
 import { SessionContext } from '../../pages';
+import Loading from '../common/Loading';
 import ProjectList from './ProjectList';
 
 const ProjectContainer: React.FC = () => {
@@ -14,7 +15,7 @@ const ProjectContainer: React.FC = () => {
     refetchQueries: [ProjectsQuery],
   });
 
-  if (query.loading) return <p>Loading...</p>;
+  if (query.loading) return <Loading />;
   if (query.error) return <p>Loading error! {query.error.message}</p>;
 
   if (mutation.error) return <p>Submission error! {mutation.error.message}</p>;

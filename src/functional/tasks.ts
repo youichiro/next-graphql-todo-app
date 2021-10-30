@@ -9,3 +9,11 @@ export const sortTask = (tasks: Task[]): Task[] => {
     return b.id - a.id;
   });
 };
+
+export const filterIncomplateTasks = (tasks: Task[]): Task[] => {
+  return tasks.filter(task => task.done === false)
+}
+
+export const filterComplateTasks = (tasks: Task[]): Task[] => {
+  return tasks.filter((task) => task.done === true);
+};
