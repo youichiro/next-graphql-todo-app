@@ -11,6 +11,7 @@ import TaskDeleteButton from './TaskDeleteButton';
 import TaskDetail from './TaskDetail';
 import TaskList from './TaskList';
 import { Task } from '.prisma/client';
+import TaskProjectHeading from './TaskProjectHeading';
 
 export const TaskContext = createContext<{ selectedTask: Task | null }>({
   selectedTask: null,
@@ -84,7 +85,7 @@ const TaskContainer: React.FC = () => {
     <TaskContext.Provider value={{ selectedTask }}>
       <Flex h='100%'>
         <Stack flex='1' spacing='24px' px='16px' my='32px' overflow='scroll'>
-          <Heading size='md'>{query.data.selectedProject.project.name}</Heading>
+          <TaskProjectHeading projectName={query.data.selectedProject.project.name} />
           <TaskCreateForm handleTaskCreate={handleTaskCreate} />
           <TaskList
             tasks={incomplateTasks}
