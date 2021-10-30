@@ -32,6 +32,14 @@ export const UpsertSelectedProject = gql`
   }
 `;
 
+export const DeleteSelectedProject = gql`
+  mutation DeleteSelectedPorject($id: Int!) {
+    deleteSelectedProject(id: $id) {
+      id
+    }
+  }
+`;
+
 export const CreateTask = gql`
   mutation CreateTask($projectId: Int!, $title: String!, $description: String!) {
     createTask(projectId: $projectId, title: $title, description: $description) {

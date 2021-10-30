@@ -5,6 +5,7 @@ import { sortProjects } from '../../functional/projects';
 import {
   CreateProject,
   DeleteProject,
+  DeleteSelectedProject,
   UpdateProject,
   UpsertSelectedProject,
 } from '../../graphql/mutations';
@@ -31,6 +32,7 @@ const ProjectContainer: React.FC = () => {
   const [deleteProject, mutation4] = useMutation(DeleteProject, {
     refetchQueries: [ProjectsQuery],
   });
+  const [deleteSelectedProject, mutation5] = useMutation(DeleteSelectedProject);
 
   if (query.loading) return <Loading />;
   if (query.error) return <p>Loading error! {query.error.message}</p>;
@@ -39,6 +41,7 @@ const ProjectContainer: React.FC = () => {
   if (mutation2.error) return <p>{mutation2.error.message}</p>;
   if (mutation3.error) return <p>{mutation3.error.message}</p>;
   if (mutation4.error) return <p>{mutation4.error.message}</p>;
+  if (mutation5.error) return <p>{mutation5.error.message}</p>;
 
   const handleUpsertSelectedProject = (projectId: number) => {
     upsertSelectedProject({ variables: { userId: session.userId, projectId: projectId } });
@@ -53,6 +56,7 @@ const ProjectContainer: React.FC = () => {
   };
 
   const handleDeleteProject = (id: number) => {
+    deleteSelectedProject({ variables: { id: id } });
     deleteProject({ variables: { id: id } });
   };
 
@@ -65,6 +69,7 @@ const ProjectContainer: React.FC = () => {
         selectedProjectId={query.data.selectedProject?.project.id}
         handleUpsertSelectedProject={handleUpsertSelectedProject}
         handleUpdateProject={handleUpdateProject}
+        handleDeleteProject={handleDeleteProject}
       />
       <ProjectCreateButton handleCreateProject={handleCreateProject} />
     </Stack>

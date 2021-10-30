@@ -85,3 +85,22 @@ export const upsertSelectedProjectMutation = extendType({
     });
   },
 });
+
+export const DeleteSelectedProjectMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.nonNull.field('deleteSelectedProject', {
+      type: SelectedProject,
+      args: {
+        id: nonNull(intArg()),
+      },
+      resolve(_parent, args, ctx) {
+        return ctx.prisma.selectedProject.delete({
+          where: {
+            id: args.id
+          },
+        });
+      },
+    });
+  },
+});
