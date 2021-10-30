@@ -11,7 +11,7 @@ type Props = {
 
 const TaskList: React.FC<Props> = ({ tasks }) => {
   return (
-    <Box>
+    <Box my='32px' px='16px'>
       <List>
         {tasks.map((task: Task) => (
           <TaskListItem key={task.id} task={task} />

@@ -7,7 +7,7 @@ type Props = {
 
 const TaskForm: React.FC<Props> = ({ handleSubmit }) => {
   return (
-    <Box p='16px'>
+    <Box mx='16px' mt='16px'>
       <Formik
         initialValues={{ taskName: '' }}
         onSubmit={(value, actions) => handleSubmit(value.taskName, actions.resetForm)}

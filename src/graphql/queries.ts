@@ -23,6 +23,7 @@ export const SelectedProjectQuery = gql`
     selectedProject(userId: $userId) {
       project {
         id
+        name
         tasks {
           id
           title

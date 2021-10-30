@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { Box } from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { CreateTask } from '../../graphql/mutations';
 import { SelectedProjectQuery } from '../../graphql/queries';
@@ -31,8 +31,9 @@ const TaskContainer: React.FC = () => {
 
   return (
     <Box>
+      <Heading size="md" pt='32px' pb='16px' px='16px'>{query.data.selectedProject.project.name}</Heading>
       <TaskForm handleSubmit={handleTaskSubmit} />
-      <TaskList tasks={query.data.selectedProject?.project.tasks} />
+      <TaskList tasks={query.data.selectedProject.project.tasks} />
     </Box>
   );
 };
