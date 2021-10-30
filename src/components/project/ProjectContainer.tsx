@@ -1,9 +1,7 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { List, Box } from '@chakra-ui/react';
 import { useContext } from 'react';
-import { SessionContext } from '../pages';
-import ProjectListItem from './ProjectListItem';
-import { Project } from '.prisma/client';
+import { SessionContext } from '../../pages';
+import ProjectList from './ProjectList';
 
 const ProjectsQuery = gql`
   query Projects($userId: Int!) {
@@ -31,7 +29,7 @@ const UPSERT_SELECTED_PROJECT = gql`
   }
 `;
 
-const ProjectList: React.FC = () => {
+const ProjectContainer: React.FC = () => {
   const { session } = useContext(SessionContext);
   const query = useQuery(ProjectsQuery, {
     variables: { userId: session.userId },
@@ -50,19 +48,12 @@ const ProjectList: React.FC = () => {
   };
 
   return (
-    <Box>
-      <List>
-        {query.data.projects.map((project: Project) => (
-          <ProjectListItem
-            key={project.id}
-            project={project}
-            selectedProjectId={query.data.selectedProject?.project.id}
-            handleClick={handleClick}
-          />
-        ))}
-      </List>
-    </Box>
+    <ProjectList
+      projects={query.data.projects}
+      selectedProjectId={query.data.selectedProject?.project.id}
+      handleClick={handleClick}
+    />
   );
 };
 
-export default ProjectList;
+export default ProjectContainer;
