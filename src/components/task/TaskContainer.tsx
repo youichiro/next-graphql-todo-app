@@ -60,6 +60,7 @@ const TaskContainer: React.FC = () => {
         done: task.done,
       },
     });
+    setSelectedTask(task)
   };
 
   return (
