@@ -41,7 +41,11 @@ const TaskContainer: React.FC = () => {
   const handleTaskCreateSubmit = (title: string, resetForm: () => void) => {
     if (title) {
       createTask({
-        variables: { projectId: query.data.selectedProject?.project.id, title: title },
+        variables: {
+          projectId: query.data.selectedProject?.project.id,
+          title: title,
+          description: '',
+        },
       });
       resetForm();
     }
@@ -54,11 +58,11 @@ const TaskContainer: React.FC = () => {
           id: task.id,
           title: task.title,
           description: task.description,
-          done: task.done
-        }
-      })
+          done: task.done,
+        },
+      });
     }
-  }
+  };
 
   return (
     <TaskContext.Provider value={{ selectedTask }}>

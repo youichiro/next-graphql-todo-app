@@ -9,8 +9,8 @@ export const UpsertSelectedProject = gql`
 `;
 
 export const CreateTask = gql`
-  mutation CreateTask($projectId: Int!, $title: String!) {
-    createTask(projectId: $projectId, title: $title) {
+  mutation CreateTask($projectId: Int!, $title: String!, $description: String!) {
+    createTask(projectId: $projectId, title: $title, description: $description) {
       id
       title
       done
