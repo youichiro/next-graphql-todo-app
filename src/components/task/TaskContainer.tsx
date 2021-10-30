@@ -1,33 +1,11 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Box } from '@chakra-ui/react';
 import { useContext } from 'react';
+import { CreateTask } from '../../graphql/mutations';
+import { SelectedProjectQuery } from '../../graphql/queries';
 import { SessionContext } from '../../pages';
 import TaskForm from './TaskForm';
 import TaskList from './TaskList';
-
-const SelectedProjectQuery = gql`
-  query SelectedProject($userId: Int!) {
-    selectedProject(userId: $userId) {
-      project {
-        id
-        tasks {
-          id
-          title
-        }
-      }
-    }
-  }
-`;
-
-const CreateTask = gql`
-  mutation CreateTask($projectId: Int!, $title: String!) {
-    createTask(projectId: $projectId, title: $title) {
-      id
-      title
-      done
-    }
-  }
-`;
 
 const TaskContainer: React.FC = () => {
   const { session } = useContext(SessionContext);

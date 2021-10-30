@@ -1,40 +1,16 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { useContext } from 'react';
+import { UpsertSelectedProject } from '../../graphql/mutations';
+import { ProjectsQuery } from '../../graphql/queries';
 import { SessionContext } from '../../pages';
 import ProjectList from './ProjectList';
-
-const ProjectsQuery = gql`
-  query Projects($userId: Int!) {
-    projects(userId: $userId) {
-      id
-      name
-    }
-    selectedProject(userId: $userId) {
-      project {
-        id
-        tasks {
-          id
-          title
-        }
-      }
-    }
-  }
-`;
-
-const UPSERT_SELECTED_PROJECT = gql`
-  mutation UpsertSelectedPorject($userId: Int!, $projectId: Int!) {
-    upsertSelectedProject(userId: $userId, projectId: $projectId) {
-      id
-    }
-  }
-`;
 
 const ProjectContainer: React.FC = () => {
   const { session } = useContext(SessionContext);
   const query = useQuery(ProjectsQuery, {
     variables: { userId: session.userId },
   });
-  const [upsertSelectedProject, mutation] = useMutation(UPSERT_SELECTED_PROJECT, {
+  const [upsertSelectedProject, mutation] = useMutation(UpsertSelectedProject, {
     refetchQueries: [ProjectsQuery],
   });
 
