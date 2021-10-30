@@ -17,3 +17,11 @@ export const CreateTask = gql`
     }
   }
 `;
+
+export const UpdateTask = gql`
+  mutation UpdateTask($id: Int!, $title: String!, $description: String!, $done: Boolean!) {
+    updateTask(id: $id, title: $title, description: $description, done: $done) {
+      id
+    }
+  }
+`
