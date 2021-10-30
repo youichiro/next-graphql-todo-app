@@ -5,7 +5,7 @@ import { CreateTask } from '../../graphql/mutations';
 import { SelectedProjectQuery } from '../../graphql/queries';
 import { SessionContext } from '../../pages';
 import TaskDetail from './TaskDetail';
-import TaskForm from './TaskForm';
+import TaskForm from './TaskCreateForm';
 import TaskList from './TaskList';
 import { Task } from '.prisma/client';
 
@@ -51,9 +51,12 @@ const TaskContainer: React.FC = () => {
             {query.data.selectedProject.project.name}
           </Heading>
           <TaskForm handleSubmit={handleTaskSubmit} />
-          <TaskList tasks={query.data.selectedProject.project.tasks} setSelectedTask={setSelectedTask}/>
+          <TaskList
+            tasks={query.data.selectedProject.project.tasks}
+            setSelectedTask={setSelectedTask}
+          />
         </Box>
-        <Box flex='1' borderLeft='solid 1px lightgray'>
+        <Box flex='1' borderLeft='solid 1px whitesmoke'>
           <TaskDetail />
         </Box>
       </Flex>

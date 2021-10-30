@@ -5,7 +5,7 @@ type Props = {
   handleSubmit: (title: string, resetForm: () => void) => void;
 };
 
-const TaskForm: React.FC<Props> = ({ handleSubmit }) => {
+const TaskCreateForm: React.FC<Props> = ({ handleSubmit }) => {
   return (
     <Box mx='16px' mt='16px'>
       <Formik
@@ -30,4 +30,4 @@ const TaskForm: React.FC<Props> = ({ handleSubmit }) => {
     </Box>
   );
 };
-export default TaskForm;
+export default TaskCreateForm;
