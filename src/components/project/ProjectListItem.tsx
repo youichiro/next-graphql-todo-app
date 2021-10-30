@@ -56,7 +56,7 @@ const ProjectListItem: React.FC<Props> = ({
       onClick={handleItemClick}
       onDoubleClick={() => setEditable(true)}
     >
-      {editable ? (
+      {editable && project.id === selectedProjectId ? (
         <Stack direction='row' align='center'>
           <Input
             name='name'
