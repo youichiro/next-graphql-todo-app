@@ -18,32 +18,24 @@ const TaskDetail: React.FC<Props> = ({ selectedTask, handleTaskUpdateChange }) =
     }
   }, [selectedTask]);
 
-  const handleTaskTitleChange = (title: string) => {
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const title = e.target.value;
     const task = {
       ...selectedTask,
       title: title || '',
     };
-    handleTaskUpdateChange(task);
-  };
-
-  const handleTaskDescriptionChange = (description: string) => {
-    const task = {
-      ...selectedTask,
-      description: description || '',
-    };
-    handleTaskUpdateChange(task);
-  };
-
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const title = e.target.value;
     setTitle(title);
-    handleTaskTitleChange(title);
+    handleTaskUpdateChange(task);
   };
 
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const description = e.target.value;
+    const task = {
+      ...selectedTask,
+      description: description || '',
+    };
     setDescription(description);
-    handleTaskDescriptionChange(description);
+    handleTaskUpdateChange(task);
   };
 
   if (!selectedTask) return <p>Select your task.</p>;
