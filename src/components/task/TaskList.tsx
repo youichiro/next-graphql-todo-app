@@ -11,11 +11,7 @@ type Props = {
 
 const TaskList: React.FC<Props> = ({ tasks, setSelectedTask, handleTaskUpdate, color }) => {
   if (tasks.length === 0) {
-    return (
-      <Box px='32px'>
-        <Text color='gray'>nothing...</Text>
-      </Box>
-    );
+    return <></>;
   }
 
   return (

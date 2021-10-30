@@ -91,7 +91,7 @@ const TaskContainer: React.FC = () => {
             setSelectedTask={setSelectedTask}
             handleTaskUpdate={handleTaskUpdate}
           />
-          <Box pt='32px'>
+          <Box pt='32px' hidden={complateTasks.length === 0}>
             <Text color='gray'>Complated</Text>
           </Box>
           <TaskList
