@@ -2,10 +2,10 @@ import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, IconButton } from '@chakra-ui/react';
 
 type Props = {
-  handleClick: () => void
-}
+  handleTaskDelete: () => void;
+};
 
-const TaskDeleteButton: React.FC<Props> = ({ handleClick }) => {
+const TaskDeleteButton: React.FC<Props> = ({ handleTaskDelete }) => {
   return (
     <Box mx='16px' my='8px'>
       <IconButton
@@ -14,7 +14,6 @@ const TaskDeleteButton: React.FC<Props> = ({ handleClick }) => {
         color='gray'
         _hover={{ color: 'red' }}
         bg='none'
-        onClick={handleClick}
       />
     </Box>
   );

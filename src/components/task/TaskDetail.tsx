@@ -4,10 +4,10 @@ import { Task } from '.prisma/client';
 
 type Props = {
   selectedTask: Task;
-  handleTaskUpdateChange: (task: Task) => void;
+  handleTaskUpdate: (task: Task) => void;
 };
 
-const TaskDetail: React.FC<Props> = ({ selectedTask, handleTaskUpdateChange }) => {
+const TaskDetail: React.FC<Props> = ({ selectedTask, handleTaskUpdate }) => {
   const [title, setTitle] = useState<string>(selectedTask?.title || '');
   const [description, setDescription] = useState<string>(selectedTask?.title || '');
 
@@ -25,7 +25,7 @@ const TaskDetail: React.FC<Props> = ({ selectedTask, handleTaskUpdateChange }) =
       title: title || '',
     };
     setTitle(title);
-    handleTaskUpdateChange(task);
+    handleTaskUpdate(task);
   };
 
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -35,7 +35,7 @@ const TaskDetail: React.FC<Props> = ({ selectedTask, handleTaskUpdateChange }) =
       description: description || '',
     };
     setDescription(description);
-    handleTaskUpdateChange(task);
+    handleTaskUpdate(task);
   };
 
   if (!selectedTask) return <p>Select your task.</p>;
@@ -60,7 +60,7 @@ const TaskDetail: React.FC<Props> = ({ selectedTask, handleTaskUpdateChange }) =
           placeholder='Description'
           h='100%'
           borderColor='white'
-          _focus={{ boxShadow: 'none', border: 'none'}}
+          _focus={{ boxShadow: 'none', border: 'none' }}
           _hover={{ border: 'none' }}
           border='none'
         />

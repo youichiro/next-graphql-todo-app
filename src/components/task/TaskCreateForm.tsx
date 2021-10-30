@@ -2,15 +2,15 @@ import { Box, Input, FormControl, Button, Stack } from '@chakra-ui/react';
 import { Formik, Field, Form } from 'formik';
 
 type Props = {
-  handleSubmit: (title: string, resetForm: () => void) => void;
+  handleTaskCreate: (title: string, resetForm: () => void) => void;
 };
 
-const TaskCreateForm: React.FC<Props> = ({ handleSubmit }) => {
+const TaskCreateForm: React.FC<Props> = ({ handleTaskCreate }) => {
   return (
     <Box>
       <Formik
         initialValues={{ taskName: '' }}
-        onSubmit={(value, actions) => handleSubmit(value.taskName, actions.resetForm)}
+        onSubmit={(value, actions) => handleTaskCreate(value.taskName, actions.resetForm)}
       >
         <Form>
           <Stack direction='row' alignItems='center'>

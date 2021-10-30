@@ -10,7 +10,7 @@ import TaskDetail from './TaskDetail';
 import TaskList from './TaskList';
 import { Task } from '.prisma/client';
 
-export const TaskContext = createContext<{selectedTask: Task | null}>({
+export const TaskContext = createContext<{ selectedTask: Task | null }>({
   selectedTask: null,
 });
 
@@ -29,7 +29,7 @@ const TaskContainer: React.FC = () => {
   });
   const [deleteTask, mutation3] = useMutation(DeleteTask, {
     refetchQueries: [SelectedProjectQuery],
-  })
+  });
 
   if (query.loading) return <p>Loading...</p>;
   if (query.error) return <p>Error... {query.error.message}</p>;
@@ -38,7 +38,7 @@ const TaskContainer: React.FC = () => {
   if (mutation2.error) return <p>Submission error! {mutation2.error.message}</p>;
   if (mutation3.error) return <p>Submission error! {mutation3.error.message}</p>;
 
-  const handleTaskCreateSubmit = (title: string, resetForm: () => void) => {
+  const handleTaskCreate = (title: string, resetForm: () => void) => {
     if (title) {
       createTask({
         variables: {
@@ -51,7 +51,7 @@ const TaskContainer: React.FC = () => {
     }
   };
 
-  const handleTaskUpdateChange = (task: Task) => {
+  const handleTaskUpdate = (task: Task) => {
     updateTask({
       variables: {
         id: task.id,
@@ -63,32 +63,32 @@ const TaskContainer: React.FC = () => {
     setSelectedTask(task);
   };
 
-  const handleTaskDeleteClick = () => {
+  const handleTaskDelete = () => {
     if (selectedTask) {
       deleteTask({
         variables: {
-          id: selectedTask.id
+          id: selectedTask.id,
         },
       });
-      setSelectedTask(null)
+      setSelectedTask(null);
     }
-  }
+  };
 
   return (
     <TaskContext.Provider value={{ selectedTask }}>
       <Flex h='100%'>
         <Stack flex='1' spacing='24px' mx='16px' my='32px'>
           <Heading size='md'>{query.data.selectedProject.project.name}</Heading>
-          <TaskCreateForm handleSubmit={handleTaskCreateSubmit} />
+          <TaskCreateForm handleTaskCreate={handleTaskCreate} />
           <TaskList
             tasks={query.data.selectedProject.project.tasks}
             setSelectedTask={setSelectedTask}
           />
         </Stack>
         <Stack flex='1' borderLeft='solid 1px whitesmoke' px='16px' py='32px' spacing='16px'>
-          <TaskDetail selectedTask={selectedTask} handleTaskUpdateChange={handleTaskUpdateChange} />
+          <TaskDetail selectedTask={selectedTask} handleTaskUpdate={handleTaskUpdate} />
           <Box borderTop='solid 1px whitesmoke' textAlign='right' hidden={!selectedTask}>
-            <TaskDeleteButton handleClick={handleTaskDeleteClick} />
+            <TaskDeleteButton handleTaskDelete={handleTaskDelete} />
           </Box>
         </Stack>
       </Flex>
