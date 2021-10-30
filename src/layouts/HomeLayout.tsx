@@ -1,5 +1,5 @@
 import { Box, Flex } from '@chakra-ui/react';
-import Account from '../components/Account';
+import Account from '../components/account/Account';
 import ProjectContainer from '../components/project/ProjectContainer';
 import ProjectList from '../components/project/ProjectList';
 import TaskContainer from '../components/task/TaskContainer';
