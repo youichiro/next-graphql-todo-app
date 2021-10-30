@@ -6,14 +6,21 @@ type Props = {
 };
 
 const TaskDeleteButton: React.FC<Props> = ({ handleTaskDelete }) => {
+  const handleClick = () => {
+    const check = window.confirm('Delete this task?')
+    if (check) {
+      handleTaskDelete()
+    }
+  }
   return (
-    <Box mx='16px' my='8px'>
+    <Box mx='16px' mt='8px'>
       <IconButton
         aria-label='task delete button'
         icon={<DeleteIcon />}
         color='gray'
         _hover={{ color: 'red' }}
         bg='none'
+        onClick={() => handleClick()}
       />
     </Box>
   );
