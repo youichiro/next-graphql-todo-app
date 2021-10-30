@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { Box, Flex, Heading } from '@chakra-ui/react';
-import { useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { CreateTask } from '../../graphql/mutations';
 import { SelectedProjectQuery } from '../../graphql/queries';
 import { SessionContext } from '../../pages';
@@ -8,7 +8,14 @@ import TaskDetail from './TaskDetail';
 import TaskForm from './TaskForm';
 import TaskList from './TaskList';
 
+export const TaskContext = createContext({
+  selectedTaskId: null,
+  setSelectedTaskId: null,
+});
+
 const TaskContainer: React.FC = () => {
+  const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
+
   const { session } = useContext(SessionContext);
   const query = useQuery(SelectedProjectQuery, {
     variables: { userId: session.userId },
@@ -31,18 +38,20 @@ const TaskContainer: React.FC = () => {
   };
 
   return (
-    <Flex>
-      <Box flex='1'>
-        <Heading size='md' pt='32px' pb='16px' px='16px'>
-          {query.data.selectedProject.project.name}
-        </Heading>
-        <TaskForm handleSubmit={handleTaskSubmit} />
-        <TaskList tasks={query.data.selectedProject.project.tasks} />
-      </Box>
-      <Box flex='1' borderLeft='solid 1px gray' p='16px'>
-        <TaskDetail />
-      </Box>
-    </Flex>
+    <TaskContext.Provider value={{ selectedTaskId, setSelectedTaskId }}>
+      <Flex>
+        <Box flex='1'>
+          <Heading size='md' pt='32px' pb='16px' px='16px'>
+            {query.data.selectedProject.project.name}
+          </Heading>
+          <TaskForm handleSubmit={handleTaskSubmit} />
+          <TaskList tasks={query.data.selectedProject.project.tasks} />
+        </Box>
+        <Box flex='1' borderLeft='solid 1px gray' p='16px'>
+          <TaskDetail />
+        </Box>
+      </Flex>
+    </TaskContext.Provider>
   );
 };
 
