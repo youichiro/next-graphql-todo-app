@@ -83,7 +83,7 @@ const TaskContainer: React.FC = () => {
   return (
     <TaskContext.Provider value={{ selectedTask }}>
       <Flex h='100%'>
-        <Stack flex='1' spacing='24px' mx='16px' my='32px'>
+        <Stack flex='1' spacing='24px' px='16px' my='32px' overflow='scroll'>
           <Heading size='md'>{query.data.selectedProject.project.name}</Heading>
           <TaskCreateForm handleTaskCreate={handleTaskCreate} />
           <TaskList
