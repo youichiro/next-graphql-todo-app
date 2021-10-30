@@ -37,7 +37,12 @@ const TaskDetail: React.FC<Props> = ({ selectedTask, handleTaskUpdateChange }) =
   return (
     <Box>
       <Box mx='16px' my='32px'>
-        <Input variant='flushed' value={value} onChange={handleChange} />
+        <Input
+          variant='flushed'
+          value={value}
+          onChange={handleChange}
+          placeholder={!value ? 'type title' : ''}
+        />
       </Box>
       <Text m='16px' color='gray.600'>
         {selectedTask.description}
