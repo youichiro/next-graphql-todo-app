@@ -9,7 +9,7 @@ const Account: React.FC = () => {
 
   return (
     <Box p='16px'>
-      <Menu>
+      <Menu autoSelect={false}>
         <MenuButton>
           <Avatar name='avatar' src={session.user.image} />
         </MenuButton>
