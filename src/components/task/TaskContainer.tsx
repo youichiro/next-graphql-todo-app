@@ -1,25 +1,21 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { Box, Flex, Heading, Stack } from '@chakra-ui/react';
 import { createContext, useContext, useState } from 'react';
-import { CreateTask, UpdateTask } from '../../graphql/mutations';
+import { CreateTask, DeleteTask, UpdateTask } from '../../graphql/mutations';
 import { SelectedProjectQuery } from '../../graphql/queries';
 import { SessionContext } from '../../pages';
 import TaskCreateForm from './TaskCreateForm';
+import TaskDeleteButton from './TaskDeleteButton';
 import TaskDetail from './TaskDetail';
 import TaskList from './TaskList';
 import { Task } from '.prisma/client';
 
-interface TaskContextInterface {
-  selectedTask: Task | null;
-}
-
-export const TaskContext = createContext<TaskContextInterface>({
+export const TaskContext = createContext<{selectedTask: Task | null}>({
   selectedTask: null,
 });
 
 const TaskContainer: React.FC = () => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-
   const { session } = useContext(SessionContext);
 
   const query = useQuery(SelectedProjectQuery, {
@@ -31,12 +27,16 @@ const TaskContainer: React.FC = () => {
   const [updateTask, mutation2] = useMutation(UpdateTask, {
     refetchQueries: [SelectedProjectQuery],
   });
+  const [deleteTask, mutation3] = useMutation(DeleteTask, {
+    refetchQueries: [SelectedProjectQuery],
+  })
 
   if (query.loading) return <p>Loading...</p>;
   if (query.error) return <p>Error... {query.error.message}</p>;
   if (!query.data.selectedProject) return <p>Select your project.</p>;
   if (mutation1.error) return <p>Submission error! {mutation1.error.message}</p>;
   if (mutation2.error) return <p>Submission error! {mutation2.error.message}</p>;
+  if (mutation3.error) return <p>Submission error! {mutation3.error.message}</p>;
 
   const handleTaskCreateSubmit = (title: string, resetForm: () => void) => {
     if (title) {
@@ -60,25 +60,37 @@ const TaskContainer: React.FC = () => {
         done: task.done,
       },
     });
-    setSelectedTask(task)
+    setSelectedTask(task);
   };
+
+  const handleTaskDeleteClick = () => {
+    if (selectedTask) {
+      deleteTask({
+        variables: {
+          id: selectedTask.id
+        },
+      });
+      setSelectedTask(null)
+    }
+  }
 
   return (
     <TaskContext.Provider value={{ selectedTask }}>
-      <Flex h='100%' py='32px'>
-        <Stack flex='1' spacing='24px' mx='16px'>
-          <Heading size='md'>
-            {query.data.selectedProject.project.name}
-          </Heading>
+      <Flex h='100%'>
+        <Stack flex='1' spacing='24px' mx='16px' my='32px'>
+          <Heading size='md'>{query.data.selectedProject.project.name}</Heading>
           <TaskCreateForm handleSubmit={handleTaskCreateSubmit} />
           <TaskList
             tasks={query.data.selectedProject.project.tasks}
             setSelectedTask={setSelectedTask}
           />
         </Stack>
-        <Box flex='1' borderLeft='solid 1px whitesmoke' px='16px'>
+        <Stack flex='1' borderLeft='solid 1px whitesmoke' px='16px' py='32px' spacing='16px'>
           <TaskDetail selectedTask={selectedTask} handleTaskUpdateChange={handleTaskUpdateChange} />
-        </Box>
+          <Box borderTop='solid 1px whitesmoke' textAlign='right' hidden={!selectedTask}>
+            <TaskDeleteButton handleClick={handleTaskDeleteClick} />
+          </Box>
+        </Stack>
       </Flex>
     </TaskContext.Provider>
   );

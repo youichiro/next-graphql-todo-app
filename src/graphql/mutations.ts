@@ -25,3 +25,11 @@ export const UpdateTask = gql`
     }
   }
 `
+
+export const DeleteTask = gql`
+  mutation DeleteTask($id: Int!) {
+    deleteTask(id: $id) {
+      id
+    }
+  }
+`
