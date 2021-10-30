@@ -79,8 +79,8 @@ model SelectedProject {
 
 model Task {
   id          Int      @id @default(autoincrement())
-  title       String?  @db.VarChar(100)
-  description String?  @db.Text
+  title       String   @db.VarChar(100)
+  description String   @db.Text
   done        Boolean  @default(false)
   project     Project  @relation(fields: [projectId], references: [id])
   projectId   Int

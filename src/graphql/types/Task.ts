@@ -6,7 +6,7 @@ export const Task = objectType({
   definition(t) {
     t.nonNull.int('id');
     t.nonNull.string('title');
-    t.string('description');
+    t.nonNull.string('description');
     t.nonNull.boolean('done');
     t.nonNull.field('project', {
       type: Project,
@@ -51,7 +51,7 @@ export const CreateTaskMutation = extendType({
       type: Task,
       args: {
         title: nonNull(stringArg()),
-        description: stringArg(),
+        description: nonNull(stringArg()),
         projectId: nonNull(intArg()),
       },
       resolve(_parent, args, ctx) {
