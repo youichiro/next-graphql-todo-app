@@ -53,7 +53,7 @@ const TaskContainer: React.FC = () => {
           <TaskForm handleSubmit={handleTaskSubmit} />
           <TaskList tasks={query.data.selectedProject.project.tasks} setSelectedTask={setSelectedTask}/>
         </Box>
-        <Box flex='1' borderLeft='solid 1px gray' p='16px'>
+        <Box flex='1' borderLeft='solid 1px lightgray'>
           <TaskDetail />
         </Box>
       </Flex>
