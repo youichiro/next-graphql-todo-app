@@ -1,36 +1,44 @@
-import { Box, Editable, EditableInput, EditablePreview, Heading, Text } from '@chakra-ui/react';
-import { useContext } from 'react';
-import { TaskContext } from './TaskContainer';
+import { Box, Text, Input } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
 import { Task } from '.prisma/client';
 
 type Props = {
-  handleChange: (task: Task) => void
-}
+  selectedTask: Task;
+  handleTaskUpdateChange: (task: Task) => void;
+};
 
-const TaskDetail: React.FC<Props> = ({ handleChange }) => {
-  const { selectedTask } = useContext(TaskContext);
+const TaskDetail: React.FC<Props> = ({ selectedTask, handleTaskUpdateChange }) => {
+  const [value, setValue] = useState<string>(selectedTask?.title || '');
 
-  const handleTaskTitleChange = (title: string) => {
-    const task: Task = {
-      ...selectedTask,
-      title: title
+  useEffect(() => {
+    if (selectedTask) {
+      setValue(selectedTask.title);
     }
-    handleChange(task)
-  }
+  }, [selectedTask]);
+
+  const handleTaskTitleUpdateChange = (title: string) => {
+    if (title) {
+      const task = {
+        ...selectedTask,
+        title: title,
+      };
+      handleTaskUpdateChange(task);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const title = e.target.value;
+    setValue(title);
+    handleTaskTitleUpdateChange(title);
+  };
 
   if (!selectedTask) return <p>Select your task.</p>;
 
   return (
     <Box>
-      <Editable
-        defaultValue={selectedTask.title}
-        onChange={(value) => handleTaskTitleChange(value)}
-      >
-        <Heading size='md' mx='16px' my='32px'>
-          <EditablePreview />
-          <EditableInput />
-        </Heading>
-      </Editable>
+      <Box mx='16px' my='32px'>
+        <Input variant='flushed' value={value} onChange={handleChange} />
+      </Box>
       <Text m='16px' color='gray.600'>
         {selectedTask.description}
       </Text>

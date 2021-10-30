@@ -74,7 +74,7 @@ const TaskContainer: React.FC = () => {
           />
         </Box>
         <Box flex='1' borderLeft='solid 1px whitesmoke'>
-          <TaskDetail handleChange={handleTaskUpdateChange}/>
+          <TaskDetail selectedTask={selectedTask} handleTaskUpdateChange={handleTaskUpdateChange} />
         </Box>
       </Flex>
     </TaskContext.Provider>
