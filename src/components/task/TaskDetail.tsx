@@ -3,10 +3,14 @@ import { useContext } from 'react';
 import { TaskContext } from './TaskContainer';
 
 const TaskDetail: React.FC = () => {
-  const { selectedTaskId } = useContext(TaskContext);
+  const { selectedTask } = useContext(TaskContext);
+
+  if (!selectedTask) return <p>Select your task.</p>
+
   return (
     <Box>
-      {selectedTaskId}
+      {selectedTask.title}
+      {selectedTask.description}
     </Box>
   );
 };

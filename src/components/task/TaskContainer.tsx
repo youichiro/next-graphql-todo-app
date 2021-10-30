@@ -7,14 +7,18 @@ import { SessionContext } from '../../pages';
 import TaskDetail from './TaskDetail';
 import TaskForm from './TaskForm';
 import TaskList from './TaskList';
+import { Task } from '.prisma/client';
 
-export const TaskContext = createContext({
-  selectedTaskId: null,
-  setSelectedTaskId: null,
+interface TaskContextInterface {
+  selectedTask: Task | null
+}
+
+export const TaskContext = createContext<TaskContextInterface>({
+  selectedTask: null,
 });
 
 const TaskContainer: React.FC = () => {
-  const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   const { session } = useContext(SessionContext);
   const query = useQuery(SelectedProjectQuery, {
@@ -32,20 +36,22 @@ const TaskContainer: React.FC = () => {
 
   const handleTaskSubmit = (title: string, resetForm: () => void) => {
     if (title) {
-      createTask({ variables: { projectId: query.data.selectedProject?.project.id, title: title } });
-      resetForm()
+      createTask({
+        variables: { projectId: query.data.selectedProject?.project.id, title: title },
+      });
+      resetForm();
     }
   };
 
   return (
-    <TaskContext.Provider value={{ selectedTaskId, setSelectedTaskId }}>
-      <Flex>
+    <TaskContext.Provider value={{ selectedTask }}>
+      <Flex h='100%'>
         <Box flex='1'>
           <Heading size='md' pt='32px' pb='16px' px='16px'>
             {query.data.selectedProject.project.name}
           </Heading>
           <TaskForm handleSubmit={handleTaskSubmit} />
-          <TaskList tasks={query.data.selectedProject.project.tasks} />
+          <TaskList tasks={query.data.selectedProject.project.tasks} setSelectedTask={setSelectedTask}/>
         </Box>
         <Box flex='1' borderLeft='solid 1px gray' p='16px'>
           <TaskDetail />

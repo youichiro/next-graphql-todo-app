@@ -27,6 +27,8 @@ export const SelectedProjectQuery = gql`
         tasks {
           id
           title
+          description
+          done
         }
       }
     }
