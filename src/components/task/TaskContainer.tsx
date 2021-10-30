@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { Box, Flex, Heading, Stack } from '@chakra-ui/react';
 import { createContext, useContext, useState } from 'react';
+import { sortTask } from '../../functional/sortTasks';
 import { CreateTask, DeleteTask, UpdateTask } from '../../graphql/mutations';
 import { SelectedProjectQuery } from '../../graphql/queries';
 import { SessionContext } from '../../pages';
@@ -74,6 +75,8 @@ const TaskContainer: React.FC = () => {
     }
   };
 
+  const tasks = sortTask(query.data.selectedProject.project.tasks);
+
   return (
     <TaskContext.Provider value={{ selectedTask }}>
       <Flex h='100%'>
@@ -81,7 +84,7 @@ const TaskContainer: React.FC = () => {
           <Heading size='md'>{query.data.selectedProject.project.name}</Heading>
           <TaskCreateForm handleTaskCreate={handleTaskCreate} />
           <TaskList
-            tasks={query.data.selectedProject.project.tasks}
+            tasks={tasks}
             setSelectedTask={setSelectedTask}
             handleTaskUpdate={handleTaskUpdate}
           />
