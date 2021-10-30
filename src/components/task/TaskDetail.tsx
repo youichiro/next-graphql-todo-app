@@ -17,13 +17,11 @@ const TaskDetail: React.FC<Props> = ({ selectedTask, handleTaskUpdateChange }) =
   }, [selectedTask]);
 
   const handleTaskTitleUpdateChange = (title: string) => {
-    if (title) {
-      const task = {
-        ...selectedTask,
-        title: title,
-      };
-      handleTaskUpdateChange(task);
-    }
+    const task = {
+      ...selectedTask,
+      title: title,
+    };
+    handleTaskUpdateChange(task);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +39,7 @@ const TaskDetail: React.FC<Props> = ({ selectedTask, handleTaskUpdateChange }) =
           variant='flushed'
           value={value}
           onChange={handleChange}
-          placeholder={!value ? 'type title' : ''}
+          placeholder={!value ? 'untitled' : ''}
         />
       </Box>
       <Text m='16px' color='gray.600'>

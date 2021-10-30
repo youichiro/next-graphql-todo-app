@@ -12,8 +12,8 @@ const TaskListItem: React.FC<Props> = ({ task, setSelectedTask }) => {
   };
   return (
     <ListItem key={task.id} px='16px' py='8px' onClick={() => handleClick(task)}>
-      <Checkbox colorScheme='teal' isChecked={task.done}>
-        {task.title}
+      <Checkbox colorScheme='teal' isChecked={task.done} color={!task.title ? 'gray' : ''}>
+        {task.title || 'untitled'}
       </Checkbox>
     </ListItem>
   );

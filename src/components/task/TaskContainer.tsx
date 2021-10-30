@@ -52,16 +52,14 @@ const TaskContainer: React.FC = () => {
   };
 
   const handleTaskUpdateChange = (task: Task) => {
-    if (task.title) {
-      updateTask({
-        variables: {
-          id: task.id,
-          title: task.title,
-          description: task.description,
-          done: task.done,
-        },
-      });
-    }
+    updateTask({
+      variables: {
+        id: task.id,
+        title: task.title,
+        description: task.description,
+        done: task.done,
+      },
+    });
   };
 
   return (
