@@ -1,19 +1,56 @@
-import { ListItem } from '@chakra-ui/react';
+import { Input, ListItem, Box } from '@chakra-ui/react';
+import React, { useState } from 'react';
 import { Project } from '.prisma/client';
 
 type Props = {
   project: Project;
   selectedProjectId: number | null;
-  handleClick: (projectId: number) => void;
+  handleUpsertSelectedProject: (projectId: number) => void;
+  handleUpdateProject: (id: number, name: string) => void;
 };
 
-const ProjectListItem: React.FC<Props> = ({ project, selectedProjectId, handleClick }) => {
-  const isSelected = project.id === selectedProjectId
+const ProjectListItem: React.FC<Props> = ({
+  project,
+  selectedProjectId,
+  handleUpsertSelectedProject,
+  handleUpdateProject,
+}) => {
+  const [editable, setEditable] = useState(false);
+  const [name, setName] = useState(project.name);
+  const isSelected = project.id === selectedProjectId;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.value
+    setName(name);
+  };
+
+  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.value;
+    handleUpdateProject(project.id, name);
+    setName(name);
+    setEditable(false);
+  };
+
   return (
-    <ListItem key={project.id} px='16px' py='8px' bg={isSelected ? 'gray.300' : ''}
-      onClick={() => handleClick(project.id)}
+    <ListItem
+      key={project.id}
+      px='16px'
+      py='8px'
+      bg={isSelected ? 'gray.300' : ''}
+      onClick={() => handleUpsertSelectedProject(project.id)}
+      onDoubleClick={() => setEditable(true)}
     >
-      {project.name}
+      {editable ? (
+        <Input
+          name='name'
+          variant='flushed'
+          value={name}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+      ) : (
+        <Box>{project.name}</Box>
+      )}
     </ListItem>
   );
 };

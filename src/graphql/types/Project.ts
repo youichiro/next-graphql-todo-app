@@ -79,3 +79,26 @@ export const CreateProjectMutation = extendType({
     });
   },
 });
+
+export const UpdateProjectMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.nonNull.field('updateProject', {
+      type: Project,
+      args: {
+        id: nonNull(intArg()),
+        name: nonNull(stringArg()),
+      },
+      resolve(_parent, args, ctx) {
+        return ctx.prisma.project.update({
+          where: {
+            id: args.id,
+          },
+          data: {
+            name: args.name,
+          },
+        });
+      },
+    });
+  },
+});

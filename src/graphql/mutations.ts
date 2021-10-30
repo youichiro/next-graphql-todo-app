@@ -1,5 +1,21 @@
 import { gql } from '@apollo/client';
 
+export const CreateProject = gql`
+  mutation CreateProject($userId: Int!, $name: String!) {
+    createProject(userId: $userId, name: $name) {
+      id
+    }
+  }
+`
+
+export const UpdateProject = gql`
+  mutation UpdateProject($id: Int!, $name: String!) {
+    updateProject(id: $id, name: $name) {
+      id
+    }
+  }
+`
+
 export const UpsertSelectedProject = gql`
   mutation UpsertSelectedPorject($userId: Int!, $projectId: Int!) {
     upsertSelectedProject(userId: $userId, projectId: $projectId) {

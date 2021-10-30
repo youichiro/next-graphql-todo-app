@@ -5,10 +5,16 @@ import { Project } from '.prisma/client';
 type Props = {
   projects: Project[];
   selectedProjectId?: number;
-  handleClick: (projectId: number) => void;
+  handleUpsertSelectedProject: (projectId: number) => void;
+  handleUpdateProject: (id: number, name: string) => void
 };
 
-const ProjectList: React.FC<Props> = ({ projects, selectedProjectId, handleClick }) => {
+const ProjectList: React.FC<Props> = ({
+  projects,
+  selectedProjectId,
+  handleUpsertSelectedProject,
+  handleUpdateProject,
+}) => {
   if (projects.length === 0) {
     return (
       <Box>
@@ -24,7 +30,8 @@ const ProjectList: React.FC<Props> = ({ projects, selectedProjectId, handleClick
             key={project.id}
             project={project}
             selectedProjectId={selectedProjectId}
-            handleClick={handleClick}
+            handleUpsertSelectedProject={handleUpsertSelectedProject}
+            handleUpdateProject={handleUpdateProject}
           />
         ))}
       </List>

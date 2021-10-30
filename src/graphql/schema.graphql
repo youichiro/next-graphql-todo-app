@@ -7,6 +7,7 @@ type Mutation {
   createTask(description: String!, projectId: Int!, title: String!): Task!
   createUser(email: String, name: String!): User!
   deleteTask(id: Int!): Task!
+  updateProject(id: Int!, name: String!): Project!
   updateTask(description: String!, done: Boolean!, id: Int!, title: String!): Task!
   upsertSelectedProject(projectId: Int!, userId: Int!): SelectedProject!
 }
