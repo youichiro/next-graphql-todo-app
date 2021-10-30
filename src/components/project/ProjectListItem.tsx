@@ -47,6 +47,7 @@ const ProjectListItem: React.FC<Props> = ({
           value={name}
           onChange={handleChange}
           onBlur={handleBlur}
+          placeholder='Project name'
         />
       ) : (
         <Box>{project.name}</Box>

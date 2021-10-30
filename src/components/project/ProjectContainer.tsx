@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { Box } from '@chakra-ui/react';
+import { Box, Stack } from '@chakra-ui/react';
 import { useContext } from 'react';
+import { sortProjects } from '../../functional/projects';
 import { CreateProject, UpdateProject, UpsertSelectedProject } from '../../graphql/mutations';
 import { ProjectsQuery } from '../../graphql/queries';
 import { SessionContext } from '../../pages';
@@ -42,16 +43,18 @@ const ProjectContainer: React.FC = () => {
     updateProject({ variables: { id: id, name: name } });
   };
 
+  const projects = sortProjects(query.data.projects);
+
   return (
-    <Box>
+    <Stack spacing='32px'>
       <ProjectList
-        projects={query.data.projects}
+        projects={projects}
         selectedProjectId={query.data.selectedProject?.project.id}
         handleUpsertSelectedProject={handleUpsertSelectedProject}
         handleUpdateProject={handleUpdateProject}
       />
       <ProjectCreateButton handleCreateProject={handleCreateProject} />
-    </Box>
+    </Stack>
   );
 };
 
