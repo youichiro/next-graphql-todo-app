@@ -10,8 +10,8 @@ import TaskCreateForm from './TaskCreateForm';
 import TaskDeleteButton from './TaskDeleteButton';
 import TaskDetail from './TaskDetail';
 import TaskList from './TaskList';
-import { Task } from '.prisma/client';
 import TaskProjectHeading from './TaskProjectHeading';
+import { Task } from '.prisma/client';
 
 export const TaskContext = createContext<{ selectedTask: Task | null }>({
   selectedTask: null,

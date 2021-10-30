@@ -102,3 +102,22 @@ export const UpdateProjectMutation = extendType({
     });
   },
 });
+
+export const DeleteProjectMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.nonNull.field('deleteProject', {
+      type: Project,
+      args: {
+        id: nonNull(intArg()),
+      },
+      resolve(_parent, args, ctx) {
+        return ctx.prisma.project.delete({
+          where: {
+            id: args.id,
+          },
+        });
+      },
+    });
+  },
+});
