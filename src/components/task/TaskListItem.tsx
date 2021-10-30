@@ -6,13 +6,22 @@ import { Task } from '.prisma/client';
 type Props = {
   task: Task;
   setSelectedTask: (task: Task) => void;
+  handleTaskUpdate: (task: Task) => void;
 };
 
-const TaskListItem: React.FC<Props> = ({ task, setSelectedTask }) => {
+const TaskListItem: React.FC<Props> = ({ task, setSelectedTask, handleTaskUpdate }) => {
   const { selectedTask } = useContext(TaskContext);
 
   const handleClick = (task: Task) => {
     setSelectedTask(task);
+  };
+
+  const handleCheck = () => {
+    const newTask: Task = {
+      ...task,
+      done: !task.done
+    }
+    handleTaskUpdate(newTask);
   };
 
   return (
@@ -24,7 +33,12 @@ const TaskListItem: React.FC<Props> = ({ task, setSelectedTask }) => {
       bg={selectedTask?.id === task.id ? 'gray.100' : ''}
       borderRadius='8px'
     >
-      <Checkbox colorScheme='teal' isChecked={task.done} color={!task.title ? 'gray' : ''}>
+      <Checkbox
+        colorScheme='teal'
+        isChecked={task.done}
+        color={!task.title ? 'gray' : ''}
+        onChange={() => handleCheck()}
+      >
         {task.title || 'untitled'}
       </Checkbox>
     </ListItem>

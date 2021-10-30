@@ -4,15 +4,21 @@ import { Task } from '.prisma/client';
 
 type Props = {
   tasks: Task[];
-  setSelectedTask: (task: Task) => void
+  setSelectedTask: (task: Task) => void;
+  handleTaskUpdate: (task: Task) => void;
 };
 
-const TaskList: React.FC<Props> = ({ tasks, setSelectedTask }) => {
+const TaskList: React.FC<Props> = ({ tasks, setSelectedTask, handleTaskUpdate }) => {
   return (
     <Box>
       <List>
         {tasks.map((task: Task) => (
-          <TaskListItem key={task.id} task={task} setSelectedTask={setSelectedTask} />
+          <TaskListItem
+            key={task.id}
+            task={task}
+            setSelectedTask={setSelectedTask}
+            handleTaskUpdate={handleTaskUpdate}
+          />
         ))}
       </List>
     </Box>

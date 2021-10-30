@@ -83,6 +83,7 @@ const TaskContainer: React.FC = () => {
           <TaskList
             tasks={query.data.selectedProject.project.tasks}
             setSelectedTask={setSelectedTask}
+            handleTaskUpdate={handleTaskUpdate}
           />
         </Stack>
         <Stack flex='1' borderLeft='solid 1px whitesmoke' px='16px' py='32px' spacing='16px'>
