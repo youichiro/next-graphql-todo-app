@@ -10,6 +10,11 @@ type Props = {
 }
 
 const ProjectList: React.FC<Props> = ({ projects, selectedProjectId, handleClick }) => {
+  if (projects.length === 0) {
+    return (
+      <Box><Text color='gray'>Select project.</Text></Box>
+    )
+  }
   return (
     <Box>
       <List>

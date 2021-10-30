@@ -1,4 +1,4 @@
-import { Box, Input, Textarea, Stack } from '@chakra-ui/react';
+import { Box, Input, Textarea, Stack, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { Task } from '.prisma/client';
 
@@ -38,7 +38,12 @@ const TaskDetail: React.FC<Props> = ({ selectedTask, handleTaskUpdate }) => {
     handleTaskUpdate(task);
   };
 
-  if (!selectedTask) return <p>Select your task.</p>;
+  if (!selectedTask)
+    return (
+      <Box>
+        <Text color='gray'>Select task.</Text>
+      </Box>
+    );
 
   return (
     <Stack spacing='16px' h='100%'>
