@@ -11,11 +11,7 @@ type Props = {
   userId: number;
 };
 
-const ProjectListItem: React.FC<Props> = ({
-  project,
-  selectedProject,
-  userId,
-}) => {
+const ProjectListItem: React.FC<Props> = ({ project, selectedProject, userId }) => {
   const [editable, setEditable] = useState(false);
   const [name, setName] = useState(project.name);
   const isSelected = project.id === selectedProject?.project.id;
@@ -30,39 +26,29 @@ const ProjectListItem: React.FC<Props> = ({
     refetchQueries: [ProjectsQuery],
   });
 
-  const handleUpsertSelectedProject = () => {
-    upsertSelectedProject({ variables: { userId: userId, projectId: project.id}})
-  }
-  const handleUpdateProject = (name: string) => {
-    updateProject({ variables: { userId: userId, id: project.id, name: name } });
-  };
-  const handleDeleteProject = () => {
-    deleteProject({ variables: { id: project.id } });
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value;
     setName(name);
   };
 
   const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value;
-    handleUpdateProject(name);
+    updateProject({ variables: { userId: userId, id: project.id, name: name } });
     setName(name);
     setEditable(false);
   };
 
-  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleDeleteButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     const check = window.confirm('Delete this project');
     if (check) {
-      handleDeleteProject();
+      deleteProject({ variables: { id: project.id } });
     }
   };
 
   const handleItemClick = (e: React.MouseEvent<HTMLLIElement>) => {
     e.stopPropagation();
-    handleUpsertSelectedProject();
+    upsertSelectedProject({ variables: { userId: userId, projectId: project.id } });
   };
 
   if (mutation1.error) return <p>{mutation1.error.message}</p>;
@@ -84,7 +70,7 @@ const ProjectListItem: React.FC<Props> = ({
             name='name'
             variant='flushed'
             value={name}
-            onChange={handleChange}
+            onChange={handleInputChange}
             onBlur={handleBlur}
             placeholder='Project name'
           />
@@ -95,13 +81,11 @@ const ProjectListItem: React.FC<Props> = ({
             bg='none'
             _hover={{ color: 'red' }}
             _focus={{ boxShadow: 'none' }}
-            onClick={handleButtonClick}
+            onClick={handleDeleteButtonClick}
           />
         </Stack>
       ) : (
-        <Box>
-          {project.name}
-        </Box>
+        <Box>{project.name}</Box>
       )}
     </ListItem>
   );
