@@ -3,7 +3,6 @@ import { Stack } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { sortProjects } from '../../functional/projects';
 import {
-  CreateProject,
   DeleteProject,
   DeleteSelectedProject,
   UpdateProject,
@@ -23,9 +22,6 @@ const ProjectContainer: React.FC = () => {
   const [upsertSelectedProject, mutation1] = useMutation(UpsertSelectedProject, {
     refetchQueries: [ProjectsQuery],
   });
-  const [createProject, mutation2] = useMutation(CreateProject, {
-    refetchQueries: [ProjectsQuery],
-  });
   const [updateProject, mutation3] = useMutation(UpdateProject, {
     refetchQueries: [ProjectsQuery],
   });
@@ -40,7 +36,6 @@ const ProjectContainer: React.FC = () => {
   if (query.error) return <p>Loading error! {query.error.message}</p>;
 
   if (mutation1.error) return <p>{mutation1.error.message}</p>;
-  if (mutation2.error) return <p>{mutation2.error.message}</p>;
   if (mutation3.error) return <p>{mutation3.error.message}</p>;
   if (mutation4.error) return <p>{mutation4.error.message}</p>;
   if (mutation5.error) return <p>{mutation5.error.message}</p>;
@@ -51,10 +46,6 @@ const ProjectContainer: React.FC = () => {
     if (projects.map((project) => project.id).includes(projectId)) {
       upsertSelectedProject({ variables: { userId: session.userId, projectId: projectId } });
     }
-  };
-
-  const handleCreateProject = () => {
-    createProject({ variables: { userId: session.userId, name: 'new project' } });
   };
 
   const handleUpdateProject = (id: number, name: string) => {
@@ -77,7 +68,7 @@ const ProjectContainer: React.FC = () => {
         handleUpdateProject={handleUpdateProject}
         handleDeleteProject={handleDeleteProject}
       />
-      <ProjectCreateButton handleCreateProject={handleCreateProject} />
+      <ProjectCreateButton userId={session.userId} />
     </Stack>
   );
 };
