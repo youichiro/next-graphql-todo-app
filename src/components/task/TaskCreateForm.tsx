@@ -1,16 +1,38 @@
+import { useMutation } from '@apollo/client';
 import { Box, Input, FormControl, Button, Stack } from '@chakra-ui/react';
 import { Formik, Field, Form } from 'formik';
+import { CreateTask } from '../../graphql/mutations';
+import { SelectedProjectQuery } from '../../graphql/queries';
 
 type Props = {
-  handleTaskCreate: (title: string, resetForm: () => void) => void;
+  projectId: number
 };
 
-const TaskCreateForm: React.FC<Props> = ({ handleTaskCreate }) => {
+const TaskCreateForm: React.FC<Props> = (props) => {
+  const [createTask, mutation] = useMutation(CreateTask, {
+    refetchQueries: [SelectedProjectQuery],
+  });
+
+  const handleSubmit = (title: string, resetForm: () => void) => {
+    if (title) {
+      createTask({
+        variables: {
+          projectId: props.projectId,
+          title: title,
+          description: '',
+        },
+      });
+      resetForm();
+    }
+  };
+
+  if (mutation.error) return <p>Submission error! {mutation.error.message}</p>;
+
   return (
     <Box>
       <Formik
         initialValues={{ taskName: '' }}
-        onSubmit={(value, actions) => handleTaskCreate(value.taskName, actions.resetForm)}
+        onSubmit={(value, actions) => handleSubmit(value.taskName, actions.resetForm)}
       >
         <Form>
           <Stack direction='row' alignItems='center'>

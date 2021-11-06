@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { Box, Flex, Stack, Text } from '@chakra-ui/react';
 import { createContext, useContext, useState } from 'react';
 import { sortTask, filterIncomplateTasks, filterComplateTasks } from '../../functional/tasks';
-import { CreateTask, DeleteTask, UpdateTask } from '../../graphql/mutations';
+import { DeleteTask, UpdateTask } from '../../graphql/mutations';
 import { SelectedProjectQuery } from '../../graphql/queries';
 import { SessionContext } from '../../pages';
 import Loading from '../common/Loading';
@@ -24,9 +24,6 @@ const TaskContainer: React.FC = () => {
   const query = useQuery(SelectedProjectQuery, {
     variables: { userId: session.userId },
   });
-  const [createTask, mutation1] = useMutation(CreateTask, {
-    refetchQueries: [SelectedProjectQuery],
-  });
   const [updateTask, mutation2] = useMutation(UpdateTask, {
     refetchQueries: [SelectedProjectQuery],
   });
@@ -37,22 +34,8 @@ const TaskContainer: React.FC = () => {
   if (query.loading) return <Loading />;
   if (query.error) return <p>Error... {query.error.message}</p>;
   if (!query.data.selectedProject) return <p>Select your project.</p>;
-  if (mutation1.error) return <p>Submission error! {mutation1.error.message}</p>;
   if (mutation2.error) return <p>Submission error! {mutation2.error.message}</p>;
   if (mutation3.error) return <p>Submission error! {mutation3.error.message}</p>;
-
-  const handleTaskCreate = (title: string, resetForm: () => void) => {
-    if (title) {
-      createTask({
-        variables: {
-          projectId: query.data.selectedProject?.project.id,
-          title: title,
-          description: '',
-        },
-      });
-      resetForm();
-    }
-  };
 
   const handleTaskUpdate = (task: Task) => {
     updateTask({
@@ -86,7 +69,7 @@ const TaskContainer: React.FC = () => {
       <Flex h='100%'>
         <Stack flex='1' spacing='24px' px='16px' my='32px' overflow='scroll'>
           <TaskProjectHeading projectName={query.data.selectedProject.project.name} />
-          <TaskCreateForm handleTaskCreate={handleTaskCreate} />
+          <TaskCreateForm projectId={query.data.selectedProject.project.id} />
           <TaskList
             tasks={incomplateTasks}
             setSelectedTask={setSelectedTask}
