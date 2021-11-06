@@ -3,12 +3,11 @@ import { DeleteIcon } from '@chakra-ui/icons';
 import { Input, ListItem, Box, Stack, IconButton } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { DeleteProject, DeleteSelectedProject, UpdateProject, UpsertSelectedProject } from '../../graphql/mutations';
-import { ProjectsQuery } from '../../graphql/queries';
-import { Project, SelectedProject } from '.prisma/client';
+import { ProjectsQuery, SelectedProjectQuery } from '../../graphql/queries';
 
 type Props = {
-  project: Project;
-  selectedProject: SelectedProject | null;
+  project: ProjectsQuery;
+  selectedProject: SelectedProjectQuery;
   userId: number;
 };
 
@@ -70,7 +69,7 @@ const ProjectListItem: React.FC<Props> = ({
   const handleItemClick = (e: React.MouseEvent<HTMLLIElement>) => {
     e.stopPropagation();
     handleUpsertSelectedProject();
-    console.log(selectedProject?.projectId);
+    console.log(selectedProject?.project.id);
   };
 
   if (mutation1.error) return <p>{mutation1.error.message}</p>;

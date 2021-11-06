@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { Stack } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { sortProjects } from '../../functional/projects';
-import { ProjectsQuery } from '../../graphql/queries';
+import { ProjectsQuery, ProjectsQueryData, ProjectsQueryVars } from '../../graphql/queries';
 import { SessionContext } from '../../pages';
 import Loading from '../common/Loading';
 import ProjectCreateButton from './ProjectCreateButton';
@@ -10,7 +10,7 @@ import ProjectList from './ProjectList';
 
 const ProjectContainer: React.FC = () => {
   const { session } = useContext(SessionContext);
-  const query = useQuery(ProjectsQuery, {
+  const query = useQuery<ProjectsQueryData, ProjectsQueryVars>(ProjectsQuery, {
     variables: { userId: session.userId },
   });
 

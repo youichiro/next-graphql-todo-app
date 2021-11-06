@@ -1,18 +1,14 @@
 import { List, Box, Text } from '@chakra-ui/react';
+import { ProjectsQuery, SelectedProjectQuery } from '../../graphql/queries';
 import ProjectListItem from './ProjectListItem';
-import { Project, SelectedProject } from '.prisma/client';
 
 type Props = {
-  projects: Project[];
-  selectedProject: SelectedProject | null;
+  projects: ProjectsQuery[];
+  selectedProject: SelectedProjectQuery;
   userId: number;
 };
 
-const ProjectList: React.FC<Props> = ({
-  projects,
-  selectedProject,
-  userId,
-}) => {
+const ProjectList: React.FC<Props> = ({ projects, selectedProject, userId }) => {
   if (projects.length === 0) {
     return (
       <Box>
