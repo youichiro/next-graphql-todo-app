@@ -38,21 +38,15 @@ const TaskDetail: React.FC<Props> = ({ selectedTask, setSelectedTask }) => {
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const title = e.target.value;
-    const task = {
-      ...selectedTask,
-      title: title || '',
-    };
+    const title = e.target.value || '';
+    const task = { ...selectedTask, title };
     setTitle(title);
     handleTaskUpdate(task);
   };
 
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const description = e.target.value;
-    const task = {
-      ...selectedTask,
-      description: description || '',
-    };
+    const description = e.target.value || '';
+    const task = { ...selectedTask, description };
     setDescription(description);
     handleTaskUpdate(task);
   };
