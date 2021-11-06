@@ -1,27 +1,25 @@
 import { useMutation } from '@apollo/client';
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Input, ListItem, Box, Stack, IconButton, useRadio } from '@chakra-ui/react';
+import { Input, ListItem, Box, Stack, IconButton } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { UpdateProject, UpsertSelectedProject } from '../../graphql/mutations';
+import { DeleteProject, DeleteSelectedProject, UpdateProject, UpsertSelectedProject } from '../../graphql/mutations';
 import { ProjectsQuery } from '../../graphql/queries';
-import { Project } from '.prisma/client';
+import { Project, SelectedProject } from '.prisma/client';
 
 type Props = {
   project: Project;
-  selectedProjectId: number | null;
+  selectedProject: SelectedProject | null;
   userId: number;
-  handleDeleteProject: (id: number) => void;
 };
 
 const ProjectListItem: React.FC<Props> = ({
   project,
-  selectedProjectId,
+  selectedProject,
   userId,
-  handleDeleteProject,
 }) => {
   const [editable, setEditable] = useState(false);
   const [name, setName] = useState(project.name);
-  const isSelected = project.id === selectedProjectId;
+  const isSelected = project.id === selectedProject?.project.id;
 
   const [upsertSelectedProject, mutation1] = useMutation(UpsertSelectedProject, {
     refetchQueries: [ProjectsQuery],
@@ -29,13 +27,24 @@ const ProjectListItem: React.FC<Props> = ({
   const [updateProject, mutation2] = useMutation(UpdateProject, {
     refetchQueries: [ProjectsQuery],
   });
+  const [deleteProject, mutation3] = useMutation(DeleteProject, {
+    refetchQueries: [ProjectsQuery],
+  });
+  const [deleteSelectedProject, mutation4] = useMutation(DeleteSelectedProject, {
+    refetchQueries: [ProjectsQuery],
+  });
 
   const handleUpsertSelectedProject = () => {
     upsertSelectedProject({ variables: { userId: userId, projectId: project.id}})
   }
-
   const handleUpdateProject = (name: string) => {
     updateProject({ variables: { userId: userId, id: project.id, name: name } });
+  };
+  const handleDeleteProject = () => {
+    if (selectedProject) {
+      deleteSelectedProject({ variables: { id: selectedProject.id } });
+    }
+    deleteProject({ variables: { id: project.id } });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,17 +63,20 @@ const ProjectListItem: React.FC<Props> = ({
     e.stopPropagation();
     const check = window.confirm('Delete this project');
     if (check) {
-      handleDeleteProject(project.id);
+      handleDeleteProject();
     }
   };
 
   const handleItemClick = (e: React.MouseEvent<HTMLLIElement>) => {
     e.stopPropagation();
     handleUpsertSelectedProject();
+    console.log(selectedProject?.projectId);
   };
 
   if (mutation1.error) return <p>{mutation1.error.message}</p>;
   if (mutation2.error) return <p>{mutation2.error.message}</p>;
+  if (mutation3.error) return <p>{mutation3.error.message}</p>;
+  if (mutation4.error) return <p>{mutation4.error.message}</p>;
 
   return (
     <ListItem
@@ -75,7 +87,7 @@ const ProjectListItem: React.FC<Props> = ({
       onClick={handleItemClick}
       onDoubleClick={() => setEditable(true)}
     >
-      {editable && project.id === selectedProjectId ? (
+      {editable && isSelected ? (
         <Stack direction='row' align='center'>
           <Input
             name='name'
@@ -96,7 +108,9 @@ const ProjectListItem: React.FC<Props> = ({
           />
         </Stack>
       ) : (
-        <Box>{project.name}</Box>
+        <Box>
+          {project.name}
+        </Box>
       )}
     </ListItem>
   );

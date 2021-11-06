@@ -1,19 +1,17 @@
 import { List, Box, Text } from '@chakra-ui/react';
 import ProjectListItem from './ProjectListItem';
-import { Project } from '.prisma/client';
+import { Project, SelectedProject } from '.prisma/client';
 
 type Props = {
   projects: Project[];
-  selectedProjectId?: number;
+  selectedProject: SelectedProject | null;
   userId: number;
-  handleDeleteProject: (id: number) => void;
 };
 
 const ProjectList: React.FC<Props> = ({
   projects,
-  selectedProjectId,
+  selectedProject,
   userId,
-  handleDeleteProject,
 }) => {
   if (projects.length === 0) {
     return (
@@ -29,9 +27,8 @@ const ProjectList: React.FC<Props> = ({
           <ProjectListItem
             key={project.id}
             project={project}
-            selectedProjectId={selectedProjectId}
+            selectedProject={selectedProject}
             userId={userId}
-            handleDeleteProject={handleDeleteProject}
           />
         ))}
       </List>
