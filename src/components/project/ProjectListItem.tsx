@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Input, ListItem, Box, Stack, IconButton } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { DeleteProject, DeleteSelectedProject, UpdateProject, UpsertSelectedProject } from '../../graphql/mutations';
+import { DeleteProject, UpdateProject, UpsertSelectedProject } from '../../graphql/mutations';
 import { ProjectsQuery, SelectedProjectQuery } from '../../graphql/queries';
 
 type Props = {
@@ -29,9 +29,6 @@ const ProjectListItem: React.FC<Props> = ({
   const [deleteProject, mutation3] = useMutation(DeleteProject, {
     refetchQueries: [ProjectsQuery],
   });
-  const [deleteSelectedProject, mutation4] = useMutation(DeleteSelectedProject, {
-    refetchQueries: [ProjectsQuery],
-  });
 
   const handleUpsertSelectedProject = () => {
     upsertSelectedProject({ variables: { userId: userId, projectId: project.id}})
@@ -40,9 +37,6 @@ const ProjectListItem: React.FC<Props> = ({
     updateProject({ variables: { userId: userId, id: project.id, name: name } });
   };
   const handleDeleteProject = () => {
-    if (selectedProject) {
-      deleteSelectedProject({ variables: { id: selectedProject.id } });
-    }
     deleteProject({ variables: { id: project.id } });
   };
 
@@ -74,7 +68,6 @@ const ProjectListItem: React.FC<Props> = ({
   if (mutation1.error) return <p>{mutation1.error.message}</p>;
   if (mutation2.error) return <p>{mutation2.error.message}</p>;
   if (mutation3.error) return <p>{mutation3.error.message}</p>;
-  if (mutation4.error) return <p>{mutation4.error.message}</p>;
 
   return (
     <ListItem
