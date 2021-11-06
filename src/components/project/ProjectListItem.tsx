@@ -69,7 +69,6 @@ const ProjectListItem: React.FC<Props> = ({
   const handleItemClick = (e: React.MouseEvent<HTMLLIElement>) => {
     e.stopPropagation();
     handleUpsertSelectedProject();
-    console.log(selectedProject?.project.id);
   };
 
   if (mutation1.error) return <p>{mutation1.error.message}</p>;
