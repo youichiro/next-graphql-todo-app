@@ -1,15 +1,22 @@
+import { useMutation } from '@apollo/client';
 import { Box, Input, Textarea, Stack, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
+import { UpdateTask } from '../../graphql/mutations';
+import { SelectedProjectQuery } from '../../graphql/queries';
 import { Task } from '.prisma/client';
 
 type Props = {
   selectedTask: Task;
-  handleTaskUpdate: (task: Task) => void;
+  setSelectedTask: (task: Task) => void;
 };
 
-const TaskDetail: React.FC<Props> = ({ selectedTask, handleTaskUpdate }) => {
+const TaskDetail: React.FC<Props> = ({ selectedTask, setSelectedTask }) => {
   const [title, setTitle] = useState<string>(selectedTask?.title || '');
   const [description, setDescription] = useState<string>(selectedTask?.title || '');
+
+  const [updateTask, mutation] = useMutation(UpdateTask, {
+    refetchQueries: [SelectedProjectQuery],
+  });
 
   useEffect(() => {
     if (selectedTask) {
@@ -17,6 +24,18 @@ const TaskDetail: React.FC<Props> = ({ selectedTask, handleTaskUpdate }) => {
       setDescription(selectedTask.description);
     }
   }, [selectedTask]);
+
+  const handleTaskUpdate = (task: Task) => {
+    updateTask({
+      variables: {
+        id: task.id,
+        title: task.title,
+        description: task.description,
+        done: task.done,
+      },
+    });
+    setSelectedTask(task);
+  };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const title = e.target.value;
@@ -37,6 +56,8 @@ const TaskDetail: React.FC<Props> = ({ selectedTask, handleTaskUpdate }) => {
     setDescription(description);
     handleTaskUpdate(task);
   };
+
+  if (mutation.error) return <p>Submission error! {mutation.error.message}</p>;
 
   if (!selectedTask)
     return (

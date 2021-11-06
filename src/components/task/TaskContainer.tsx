@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { Box, Flex, Stack, Text } from '@chakra-ui/react';
 import { createContext, useContext, useState } from 'react';
 import { sortTask, filterIncomplateTasks, filterComplateTasks } from '../../functional/tasks';
-import { DeleteTask, UpdateTask } from '../../graphql/mutations';
+import { DeleteTask } from '../../graphql/mutations';
 import { SelectedProjectQuery } from '../../graphql/queries';
 import { SessionContext } from '../../pages';
 import Loading from '../common/Loading';
@@ -24,9 +24,6 @@ const TaskContainer: React.FC = () => {
   const query = useQuery(SelectedProjectQuery, {
     variables: { userId: session.userId },
   });
-  const [updateTask, mutation2] = useMutation(UpdateTask, {
-    refetchQueries: [SelectedProjectQuery],
-  });
   const [deleteTask, mutation3] = useMutation(DeleteTask, {
     refetchQueries: [SelectedProjectQuery],
   });
@@ -34,20 +31,7 @@ const TaskContainer: React.FC = () => {
   if (query.loading) return <Loading />;
   if (query.error) return <p>Error... {query.error.message}</p>;
   if (!query.data.selectedProject) return <p>Select your project.</p>;
-  if (mutation2.error) return <p>Submission error! {mutation2.error.message}</p>;
   if (mutation3.error) return <p>Submission error! {mutation3.error.message}</p>;
-
-  const handleTaskUpdate = (task: Task) => {
-    updateTask({
-      variables: {
-        id: task.id,
-        title: task.title,
-        description: task.description,
-        done: task.done,
-      },
-    });
-    setSelectedTask(task);
-  };
 
   const handleTaskDelete = () => {
     if (selectedTask) {
@@ -84,7 +68,7 @@ const TaskContainer: React.FC = () => {
           />
         </Stack>
         <Stack flex='1' borderLeft='solid 1px whitesmoke' px='16px' py='32px' spacing='16px'>
-          <TaskDetail selectedTask={selectedTask} handleTaskUpdate={handleTaskUpdate} />
+          <TaskDetail selectedTask={selectedTask} setSelectedTask={setSelectedTask} />
           <Box borderTop='solid 1px whitesmoke' textAlign='right' hidden={!selectedTask}>
             <TaskDeleteButton handleTaskDelete={handleTaskDelete} />
           </Box>
