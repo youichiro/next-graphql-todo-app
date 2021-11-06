@@ -17,7 +17,7 @@ const ProjectListItem: React.FC<Props> = ({ project, selectedProject, userId }) 
   const [name, setName] = useState(project.name);
   const isSelected = project.id === selectedProject?.project.id;
 
-  const [upsertSelectedProject, mutation1] = useMutation(UpsertSelectedProject, {
+  const [upsertSelectedProject, mutation] = useMutation(UpsertSelectedProject, {
     refetchQueries: [ProjectsQuery],
   });
 
@@ -26,7 +26,7 @@ const ProjectListItem: React.FC<Props> = ({ project, selectedProject, userId }) 
     upsertSelectedProject({ variables: { userId: userId, projectId: project.id } });
   };
 
-  if (mutation1.error) return <p>{mutation1.error.message}</p>;
+  if (mutation.error) return <p>{mutation.error.message}</p>;
 
   return (
     <ListItem
