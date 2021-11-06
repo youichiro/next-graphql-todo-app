@@ -1,9 +1,9 @@
 import { useMutation } from '@apollo/client';
-import { DeleteIcon } from '@chakra-ui/icons';
-import { ListItem, Box, Stack, IconButton } from '@chakra-ui/react';
+import { ListItem, Box, Stack } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { DeleteProject, UpsertSelectedProject } from '../../graphql/mutations';
+import { UpsertSelectedProject } from '../../graphql/mutations';
 import { ProjectsQuery, SelectedProjectQuery } from '../../graphql/queries';
+import ProjectDeleteButton from './ProjectDeleteButton';
 import ProjectNameForm from './ProjectNameForm';
 
 type Props = {
@@ -20,17 +20,6 @@ const ProjectListItem: React.FC<Props> = ({ project, selectedProject, userId }) 
   const [upsertSelectedProject, mutation1] = useMutation(UpsertSelectedProject, {
     refetchQueries: [ProjectsQuery],
   });
-  const [deleteProject, mutation3] = useMutation(DeleteProject, {
-    refetchQueries: [ProjectsQuery],
-  });
-
-  const handleDeleteButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    const check = window.confirm('Delete this project');
-    if (check) {
-      deleteProject({ variables: { id: project.id } });
-    }
-  };
 
   const handleItemClick = (e: React.MouseEvent<HTMLLIElement>) => {
     e.stopPropagation();
@@ -38,7 +27,6 @@ const ProjectListItem: React.FC<Props> = ({ project, selectedProject, userId }) 
   };
 
   if (mutation1.error) return <p>{mutation1.error.message}</p>;
-  if (mutation3.error) return <p>{mutation3.error.message}</p>;
 
   return (
     <ListItem
@@ -58,15 +46,7 @@ const ProjectListItem: React.FC<Props> = ({ project, selectedProject, userId }) 
             setName={setName}
             setEditable={setEditable}
           />
-          <IconButton
-            aria-label='delete project button'
-            icon={<DeleteIcon />}
-            size='xs'
-            bg='none'
-            _hover={{ color: 'red' }}
-            _focus={{ boxShadow: 'none' }}
-            onClick={handleDeleteButtonClick}
-          />
+          <ProjectDeleteButton projectId={project.id} />
         </Stack>
       ) : (
         <Box>{project.name}</Box>
