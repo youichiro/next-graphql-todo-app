@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Input, ListItem, Box, Stack, IconButton, useRadio } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { UpsertSelectedProject } from '../../graphql/mutations';
+import { UpdateProject, UpsertSelectedProject } from '../../graphql/mutations';
 import { ProjectsQuery } from '../../graphql/queries';
 import { Project } from '.prisma/client';
 
@@ -10,7 +10,6 @@ type Props = {
   project: Project;
   selectedProjectId: number | null;
   userId: number;
-  handleUpdateProject: (id: number, name: string) => void;
   handleDeleteProject: (id: number) => void;
 };
 
@@ -18,7 +17,6 @@ const ProjectListItem: React.FC<Props> = ({
   project,
   selectedProjectId,
   userId,
-  handleUpdateProject,
   handleDeleteProject,
 }) => {
   const [editable, setEditable] = useState(false);
@@ -28,10 +26,17 @@ const ProjectListItem: React.FC<Props> = ({
   const [upsertSelectedProject, mutation1] = useMutation(UpsertSelectedProject, {
     refetchQueries: [ProjectsQuery],
   });
+  const [updateProject, mutation2] = useMutation(UpdateProject, {
+    refetchQueries: [ProjectsQuery],
+  });
 
   const handleUpsertSelectedProject = () => {
     upsertSelectedProject({ variables: { userId: userId, projectId: project.id}})
   }
+
+  const handleUpdateProject = (name: string) => {
+    updateProject({ variables: { userId: userId, id: project.id, name: name } });
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value;
@@ -40,7 +45,7 @@ const ProjectListItem: React.FC<Props> = ({
 
   const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value;
-    handleUpdateProject(project.id, name);
+    handleUpdateProject(name);
     setName(name);
     setEditable(false);
   };
@@ -59,6 +64,7 @@ const ProjectListItem: React.FC<Props> = ({
   };
 
   if (mutation1.error) return <p>{mutation1.error.message}</p>;
+  if (mutation2.error) return <p>{mutation2.error.message}</p>;
 
   return (
     <ListItem

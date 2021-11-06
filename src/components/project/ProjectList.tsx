@@ -6,7 +6,6 @@ type Props = {
   projects: Project[];
   selectedProjectId?: number;
   userId: number;
-  handleUpdateProject: (id: number, name: string) => void;
   handleDeleteProject: (id: number) => void;
 };
 
@@ -14,7 +13,6 @@ const ProjectList: React.FC<Props> = ({
   projects,
   selectedProjectId,
   userId,
-  handleUpdateProject,
   handleDeleteProject,
 }) => {
   if (projects.length === 0) {
@@ -33,7 +31,6 @@ const ProjectList: React.FC<Props> = ({
             project={project}
             selectedProjectId={selectedProjectId}
             userId={userId}
-            handleUpdateProject={handleUpdateProject}
             handleDeleteProject={handleDeleteProject}
           />
         ))}
