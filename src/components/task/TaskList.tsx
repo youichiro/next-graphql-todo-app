@@ -1,15 +1,14 @@
-import { List, Box, Text } from '@chakra-ui/react';
+import { List, Box } from '@chakra-ui/react';
 import TaskListItem from './TaskListItem';
 import { Task } from '.prisma/client';
 
 type Props = {
   tasks: Task[];
   setSelectedTask: (task: Task) => void;
-  handleTaskUpdate: (task: Task) => void;
   color?: string;
 };
 
-const TaskList: React.FC<Props> = ({ tasks, setSelectedTask, handleTaskUpdate, color }) => {
+const TaskList: React.FC<Props> = ({ tasks, setSelectedTask, color }) => {
   if (tasks.length === 0) {
     return <></>;
   }
@@ -22,7 +21,6 @@ const TaskList: React.FC<Props> = ({ tasks, setSelectedTask, handleTaskUpdate, c
             key={task.id}
             task={task}
             setSelectedTask={setSelectedTask}
-            handleTaskUpdate={handleTaskUpdate}
             color={color}
           />
         ))}

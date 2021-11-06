@@ -73,7 +73,6 @@ const TaskContainer: React.FC = () => {
           <TaskList
             tasks={incomplateTasks}
             setSelectedTask={setSelectedTask}
-            handleTaskUpdate={handleTaskUpdate}
           />
           <Box pt='32px' hidden={complateTasks.length === 0}>
             <Text color='gray'>Complated</Text>
@@ -81,7 +80,6 @@ const TaskContainer: React.FC = () => {
           <TaskList
             tasks={complateTasks}
             setSelectedTask={setSelectedTask}
-            handleTaskUpdate={handleTaskUpdate}
             color='gray'
           />
         </Stack>
