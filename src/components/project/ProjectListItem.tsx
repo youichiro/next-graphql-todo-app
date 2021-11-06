@@ -1,9 +1,10 @@
 import { useMutation } from '@apollo/client';
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Input, ListItem, Box, Stack, IconButton } from '@chakra-ui/react';
+import { ListItem, Box, Stack, IconButton } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { DeleteProject, UpdateProject, UpsertSelectedProject } from '../../graphql/mutations';
+import { DeleteProject, UpsertSelectedProject } from '../../graphql/mutations';
 import { ProjectsQuery, SelectedProjectQuery } from '../../graphql/queries';
+import ProjectNameForm from './ProjectNameForm';
 
 type Props = {
   project: ProjectsQuery;
@@ -19,24 +20,9 @@ const ProjectListItem: React.FC<Props> = ({ project, selectedProject, userId }) 
   const [upsertSelectedProject, mutation1] = useMutation(UpsertSelectedProject, {
     refetchQueries: [ProjectsQuery],
   });
-  const [updateProject, mutation2] = useMutation(UpdateProject, {
-    refetchQueries: [ProjectsQuery],
-  });
   const [deleteProject, mutation3] = useMutation(DeleteProject, {
     refetchQueries: [ProjectsQuery],
   });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.value;
-    setName(name);
-  };
-
-  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.value;
-    updateProject({ variables: { userId: userId, id: project.id, name: name } });
-    setName(name);
-    setEditable(false);
-  };
 
   const handleDeleteButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -52,7 +38,6 @@ const ProjectListItem: React.FC<Props> = ({ project, selectedProject, userId }) 
   };
 
   if (mutation1.error) return <p>{mutation1.error.message}</p>;
-  if (mutation2.error) return <p>{mutation2.error.message}</p>;
   if (mutation3.error) return <p>{mutation3.error.message}</p>;
 
   return (
@@ -66,13 +51,12 @@ const ProjectListItem: React.FC<Props> = ({ project, selectedProject, userId }) 
     >
       {editable && isSelected ? (
         <Stack direction='row' align='center'>
-          <Input
-            name='name'
-            variant='flushed'
-            value={name}
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-            placeholder='Project name'
+          <ProjectNameForm
+            userId={userId}
+            projectId={project.id}
+            name={name}
+            setName={setName}
+            setEditable={setEditable}
           />
           <IconButton
             aria-label='delete project button'
