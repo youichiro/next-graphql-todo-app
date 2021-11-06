@@ -1,12 +1,15 @@
+import { useMutation } from '@apollo/client';
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Input, ListItem, Box, Stack, IconButton } from '@chakra-ui/react';
+import { Input, ListItem, Box, Stack, IconButton, useRadio } from '@chakra-ui/react';
 import React, { useState } from 'react';
+import { UpsertSelectedProject } from '../../graphql/mutations';
+import { ProjectsQuery } from '../../graphql/queries';
 import { Project } from '.prisma/client';
 
 type Props = {
   project: Project;
   selectedProjectId: number | null;
-  handleUpsertSelectedProject: (projectId: number) => void;
+  userId: number;
   handleUpdateProject: (id: number, name: string) => void;
   handleDeleteProject: (id: number) => void;
 };
@@ -14,13 +17,21 @@ type Props = {
 const ProjectListItem: React.FC<Props> = ({
   project,
   selectedProjectId,
-  handleUpsertSelectedProject,
+  userId,
   handleUpdateProject,
   handleDeleteProject,
 }) => {
   const [editable, setEditable] = useState(false);
   const [name, setName] = useState(project.name);
   const isSelected = project.id === selectedProjectId;
+
+  const [upsertSelectedProject, mutation1] = useMutation(UpsertSelectedProject, {
+    refetchQueries: [ProjectsQuery],
+  });
+
+  const handleUpsertSelectedProject = () => {
+    upsertSelectedProject({ variables: { userId: userId, projectId: project.id}})
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value;
@@ -35,7 +46,7 @@ const ProjectListItem: React.FC<Props> = ({
   };
 
   const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
+    e.stopPropagation();
     const check = window.confirm('Delete this project');
     if (check) {
       handleDeleteProject(project.id);
@@ -43,9 +54,11 @@ const ProjectListItem: React.FC<Props> = ({
   };
 
   const handleItemClick = (e: React.MouseEvent<HTMLLIElement>) => {
-    e.stopPropagation()
-    handleUpsertSelectedProject(project.id)
-  }
+    e.stopPropagation();
+    handleUpsertSelectedProject();
+  };
+
+  if (mutation1.error) return <p>{mutation1.error.message}</p>;
 
   return (
     <ListItem

@@ -5,7 +5,7 @@ import { Project } from '.prisma/client';
 type Props = {
   projects: Project[];
   selectedProjectId?: number;
-  handleUpsertSelectedProject: (projectId: number) => void;
+  userId: number;
   handleUpdateProject: (id: number, name: string) => void;
   handleDeleteProject: (id: number) => void;
 };
@@ -13,7 +13,7 @@ type Props = {
 const ProjectList: React.FC<Props> = ({
   projects,
   selectedProjectId,
-  handleUpsertSelectedProject,
+  userId,
   handleUpdateProject,
   handleDeleteProject,
 }) => {
@@ -32,7 +32,7 @@ const ProjectList: React.FC<Props> = ({
             key={project.id}
             project={project}
             selectedProjectId={selectedProjectId}
-            handleUpsertSelectedProject={handleUpsertSelectedProject}
+            userId={userId}
             handleUpdateProject={handleUpdateProject}
             handleDeleteProject={handleDeleteProject}
           />

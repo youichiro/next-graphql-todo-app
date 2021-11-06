@@ -6,7 +6,6 @@ import {
   DeleteProject,
   DeleteSelectedProject,
   UpdateProject,
-  UpsertSelectedProject,
 } from '../../graphql/mutations';
 import { ProjectsQuery } from '../../graphql/queries';
 import { SessionContext } from '../../pages';
@@ -18,9 +17,6 @@ const ProjectContainer: React.FC = () => {
   const { session } = useContext(SessionContext);
   const query = useQuery(ProjectsQuery, {
     variables: { userId: session.userId },
-  });
-  const [upsertSelectedProject, mutation1] = useMutation(UpsertSelectedProject, {
-    refetchQueries: [ProjectsQuery],
   });
   const [updateProject, mutation3] = useMutation(UpdateProject, {
     refetchQueries: [ProjectsQuery],
@@ -35,18 +31,11 @@ const ProjectContainer: React.FC = () => {
   if (query.loading) return <Loading />;
   if (query.error) return <p>Loading error! {query.error.message}</p>;
 
-  if (mutation1.error) return <p>{mutation1.error.message}</p>;
   if (mutation3.error) return <p>{mutation3.error.message}</p>;
   if (mutation4.error) return <p>{mutation4.error.message}</p>;
   if (mutation5.error) return <p>{mutation5.error.message}</p>;
 
   const projects = sortProjects(query.data.projects);
-
-  const handleUpsertSelectedProject = (projectId: number) => {
-    if (projects.map((project) => project.id).includes(projectId)) {
-      upsertSelectedProject({ variables: { userId: session.userId, projectId: projectId } });
-    }
-  };
 
   const handleUpdateProject = (id: number, name: string) => {
     updateProject({ variables: { userId: session.userId, id: id, name: name } });
@@ -64,7 +53,7 @@ const ProjectContainer: React.FC = () => {
       <ProjectList
         projects={projects}
         selectedProjectId={query.data.selectedProject?.project.id}
-        handleUpsertSelectedProject={handleUpsertSelectedProject}
+        userId={session.userId}
         handleUpdateProject={handleUpdateProject}
         handleDeleteProject={handleDeleteProject}
       />
