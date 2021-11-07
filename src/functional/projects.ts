@@ -1,5 +1,4 @@
 import { ProjectsQuery } from '../graphql/queries';
-// import { Project } from '.prisma/client';
 
 export const sortProjects = (projects: ProjectsQuery[]): ProjectsQuery[] => {
   const projectsArray = [...projects];

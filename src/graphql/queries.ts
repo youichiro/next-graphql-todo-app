@@ -27,24 +27,31 @@ export interface ProjectsQueryVars {
   userId: number;
 }
 
+const SelectedProjectFields = gql`
+  fragment SelectedProjectFields on SelectedProject {
+    id
+    project {
+      id
+      name
+      tasks {
+        id
+        title
+        description
+        done
+      }
+    }
+  }
+`;
+
 export const ProjectsQuery = gql`
+  ${SelectedProjectFields}
   query Projects($userId: Int!) {
     projects(userId: $userId) {
       id
       name
     }
     selectedProject(userId: $userId) {
-      id
-      project {
-        id
-        name
-        tasks {
-          id
-          title
-          description
-          done
-        }
-      }
+      ...SelectedProjectFields
     }
   }
 `;
@@ -54,19 +61,10 @@ export interface SelectedProjectQueryData {
 }
 
 export const SelectedProjectQuery = gql`
+  ${SelectedProjectFields}
   query SelectedProject($userId: Int!) {
     selectedProject(userId: $userId) {
-      id
-      project {
-        id
-        name
-        tasks {
-          id
-          title
-          description
-          done
-        }
-      }
+      ...SelectedProjectFields
     }
   }
 `;
