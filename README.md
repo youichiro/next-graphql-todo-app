@@ -17,6 +17,7 @@ Todo App with Fullstack Next.js, Prisma, PostgreSQL and GraphQL
 
 
 ## Project Directory
-
+WIP
 
 ## Setup
+WIP
