@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/client';
 import { createContext } from 'react';
-import Loading from '../../functional/Loading';
+import Loading from '../../ui/Loading';
 import TopPage from '.';
 
 export const SessionContext = createContext({

@@ -3,7 +3,7 @@ import { Box, Flex, Stack, Text } from '@chakra-ui/react';
 import { createContext, useContext, useState } from 'react';
 import { sortTask, filterIncomplateTasks, filterComplateTasks } from '../../../utils/tasks';
 import { SelectedProjectQuery } from '../../../graphql/queries';
-import Loading from '../../functional/Loading';
+import Loading from '../../ui/Loading';
 import { SessionContext } from '../../page/Top';
 import TaskCreateForm from './TaskCreateForm';
 import TaskDeleteButton from './TaskDeleteButton';

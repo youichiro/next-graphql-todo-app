@@ -3,7 +3,7 @@ import { Stack } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { sortProjects } from '../../../utils/projects';
 import { ProjectsQuery, ProjectsQueryData, ProjectsQueryVars } from '../../../graphql/queries';
-import Loading from '../../functional/Loading';
+import Loading from '../../ui/Loading';
 import { SessionContext } from '../../page/Top';
 import ProjectCreateButton from './ProjectCreateButton';
 import ProjectList from './ProjectList';
