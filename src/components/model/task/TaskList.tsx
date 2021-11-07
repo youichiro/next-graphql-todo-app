@@ -17,12 +17,7 @@ const TaskList: React.FC<Props> = ({ tasks, setSelectedTask, color }) => {
     <Box>
       <List>
         {tasks.map((task: Task) => (
-          <TaskListItem
-            key={task.id}
-            task={task}
-            setSelectedTask={setSelectedTask}
-            color={color}
-          />
+          <TaskListItem key={task.id} task={task} setSelectedTask={setSelectedTask} color={color} />
         ))}
       </List>
     </Box>

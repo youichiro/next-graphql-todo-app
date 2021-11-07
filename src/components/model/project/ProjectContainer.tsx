@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/client';
 import { Stack } from '@chakra-ui/react';
 import { useContext } from 'react';
-import { sortProjects } from '../../../utils/projects';
 import { ProjectsQuery, ProjectsQueryData, ProjectsQueryVars } from '../../../graphql/queries';
-import Loading from '../../ui/Loading';
+import { sortProjects } from '../../../utils/projects';
 import { SessionContext } from '../../page/Top';
+import Loading from '../../ui/Loading';
 import ProjectCreateButton from './ProjectCreateButton';
 import ProjectList from './ProjectList';
 

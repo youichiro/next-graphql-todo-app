@@ -14,12 +14,12 @@ const ProjectDeleteButton: React.FC<Props> = (props) => {
   });
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-     e.stopPropagation();
-     const check = window.confirm('Delete this project');
-     if (check) {
-       deleteProject({ variables: { id: props.projectId } });
-     }
-  }
+    e.stopPropagation();
+    const check = window.confirm('Delete this project');
+    if (check) {
+      deleteProject({ variables: { id: props.projectId } });
+    }
+  };
 
   if (mutation.error) return <p>{mutation.error.message}</p>;
 

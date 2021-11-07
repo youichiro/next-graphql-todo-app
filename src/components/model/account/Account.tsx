@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import { Avatar, Box, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { signOut } from 'next-auth/client';
 import * as React from 'react';
 import { useContext } from 'react';

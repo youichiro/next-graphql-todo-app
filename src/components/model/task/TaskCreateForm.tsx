@@ -5,7 +5,7 @@ import { CreateTask } from '../../../graphql/mutations';
 import { SelectedProjectQuery } from '../../../graphql/queries';
 
 type Props = {
-  projectId: number
+  projectId: number;
 };
 
 const TaskCreateForm: React.FC<Props> = (props) => {

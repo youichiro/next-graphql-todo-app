@@ -18,7 +18,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 export default function Home() {
-  return (
-    <Top />
-  )
+  return <Top />;
 }

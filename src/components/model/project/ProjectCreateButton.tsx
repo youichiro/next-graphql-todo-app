@@ -5,19 +5,19 @@ import { CreateProject } from '../../../graphql/mutations';
 import { ProjectsQuery } from '../../../graphql/queries';
 
 type Props = {
-  userId: number
+  userId: number;
 };
 
 const ProjectCreateButton: React.FC<Props> = ({ userId }) => {
   const [createProject, mutation] = useMutation(CreateProject, {
-    refetchQueries: [ProjectsQuery]
-  })
+    refetchQueries: [ProjectsQuery],
+  });
 
   const handleClick = () => {
-    createProject({ variables: { userId: userId, name: 'new project'}})
-  }
+    createProject({ variables: { userId: userId, name: 'new project' } });
+  };
 
-  if (mutation.error) return <p>{mutation.error.message}</p>
+  if (mutation.error) return <p>{mutation.error.message}</p>;
 
   return (
     <Center>

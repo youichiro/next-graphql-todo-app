@@ -23,7 +23,7 @@ const TaskDeleteButton: React.FC<Props> = ({ taskId, setSelectedTask }) => {
     }
   };
 
-  if (!taskId) return <></>
+  if (!taskId) return <></>;
   if (mutation.error) return <p>Submission error! {mutation.error.message}</p>;
 
   return (

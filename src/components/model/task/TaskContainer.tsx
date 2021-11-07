@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/client';
 import { Box, Flex, Stack, Text } from '@chakra-ui/react';
 import { createContext, useContext, useState } from 'react';
-import { sortTask, filterIncomplateTasks, filterComplateTasks } from '../../../utils/tasks';
 import { SelectedProjectQuery } from '../../../graphql/queries';
-import Loading from '../../ui/Loading';
+import { sortTask, filterIncomplateTasks, filterComplateTasks } from '../../../utils/tasks';
 import { SessionContext } from '../../page/Top';
+import Loading from '../../ui/Loading';
 import TaskCreateForm from './TaskCreateForm';
 import TaskDeleteButton from './TaskDeleteButton';
 import TaskDetail from './TaskDetail';
