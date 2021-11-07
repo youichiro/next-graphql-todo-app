@@ -1,8 +1,8 @@
 import { useMutation } from '@apollo/client';
 import { Box, Input, FormControl, Button, Stack } from '@chakra-ui/react';
 import { Formik, Field, Form } from 'formik';
-import { CreateTask } from '../../graphql/mutations';
-import { SelectedProjectQuery } from '../../graphql/queries';
+import { CreateTask } from '../../../graphql/mutations';
+import { SelectedProjectQuery } from '../../../graphql/queries';
 
 type Props = {
   projectId: number

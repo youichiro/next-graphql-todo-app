@@ -2,7 +2,7 @@ import { Avatar, Box, Button, Menu, MenuButton, MenuList, MenuItem } from '@chak
 import { signOut } from 'next-auth/client';
 import * as React from 'react';
 import { useContext } from 'react';
-import { SessionContext } from '../page/Top';
+import { SessionContext } from '../../page/Top';
 
 const Account: React.FC = () => {
   const { session } = useContext(SessionContext);

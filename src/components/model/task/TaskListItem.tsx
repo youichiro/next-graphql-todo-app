@@ -1,8 +1,8 @@
 import { useMutation } from '@apollo/client';
 import { ListItem, Checkbox } from '@chakra-ui/react';
 import { useContext } from 'react';
-import { UpdateTask } from '../../graphql/mutations';
-import { SelectedProjectQuery } from '../../graphql/queries';
+import { UpdateTask } from '../../../graphql/mutations';
+import { SelectedProjectQuery } from '../../../graphql/queries';
 import { TaskContext } from './TaskContainer';
 import { Task } from '.prisma/client';
 

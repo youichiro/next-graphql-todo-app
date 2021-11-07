@@ -1,7 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
-import Account from "../../account/Account";
-import ProjectContainer from "../../project/ProjectContainer";
-import TaskContainer from "../../task/TaskContainer";
+import Account from "../../model/account/Account";
+import ProjectContainer from "../../model/project/ProjectContainer";
+import TaskContainer from "../../model/task/TaskContainer";
 
 const TopPage: React.FC = () => {
   return (

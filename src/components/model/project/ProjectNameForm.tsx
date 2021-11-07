@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { Input } from '@chakra-ui/react';
-import { UpdateProject } from '../../graphql/mutations';
-import { ProjectsQuery } from '../../graphql/queries';
+import { UpdateProject } from '../../../graphql/mutations';
+import { ProjectsQuery } from '../../../graphql/queries';
 
 type Props = {
   userId: number;

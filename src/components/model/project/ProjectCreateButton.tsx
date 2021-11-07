@@ -1,8 +1,8 @@
 import { useMutation } from '@apollo/client';
 import { AddIcon } from '@chakra-ui/icons';
 import { Center, IconButton } from '@chakra-ui/react';
-import { CreateProject } from '../../graphql/mutations';
-import { ProjectsQuery } from '../../graphql/queries';
+import { CreateProject } from '../../../graphql/mutations';
+import { ProjectsQuery } from '../../../graphql/queries';
 
 type Props = {
   userId: number

@@ -1,8 +1,8 @@
 import { useMutation } from '@apollo/client';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { IconButton } from '@chakra-ui/react';
-import { DeleteProject } from '../../graphql/mutations';
-import { ProjectsQuery } from '../../graphql/queries';
+import { DeleteProject } from '../../../graphql/mutations';
+import { ProjectsQuery } from '../../../graphql/queries';
 
 type Props = {
   projectId: number;

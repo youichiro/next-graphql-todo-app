@@ -1,5 +1,5 @@
 import { List, Box, Text } from '@chakra-ui/react';
-import { ProjectsQuery, SelectedProjectQuery } from '../../graphql/queries';
+import { ProjectsQuery, SelectedProjectQuery } from '../../../graphql/queries';
 import ProjectListItem from './ProjectListItem';
 
 type Props = {

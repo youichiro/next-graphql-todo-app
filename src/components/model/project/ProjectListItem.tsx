@@ -1,8 +1,8 @@
 import { useMutation } from '@apollo/client';
 import { ListItem, Box, Stack } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { UpsertSelectedProject } from '../../graphql/mutations';
-import { ProjectsQuery, SelectedProjectQuery } from '../../graphql/queries';
+import { UpsertSelectedProject } from '../../../graphql/mutations';
+import { ProjectsQuery, SelectedProjectQuery } from '../../../graphql/queries';
 import ProjectDeleteButton from './ProjectDeleteButton';
 import ProjectNameForm from './ProjectNameForm';
 

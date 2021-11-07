@@ -2,8 +2,8 @@ import { useMutation } from '@apollo/client';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, IconButton } from '@chakra-ui/react';
 import { Task } from '@prisma/client';
-import { DeleteTask } from '../../graphql/mutations';
-import { SelectedProjectQuery } from '../../graphql/queries';
+import { DeleteTask } from '../../../graphql/mutations';
+import { SelectedProjectQuery } from '../../../graphql/queries';
 
 type Props = {
   taskId: number | null;
